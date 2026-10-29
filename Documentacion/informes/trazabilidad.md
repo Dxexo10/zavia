@@ -102,7 +102,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-021 | Sin fase derivable | Pendiente por fase | — |
 | RNF-022 | Sin fase derivable | Pendiente por fase | — |
 | RNF-024 | Sin fase derivable | Pendiente por fase | — |
-| RNF-025 | Sin fase derivable | Pendiente por fase | — |
+| RNF-025 | Sin fase derivable | Cubierto | tests/static/ci-security.test.mjs |
 | RNF-026 | Sin fase derivable | Pendiente por fase | — |
 | RNF-027 | Sin fase derivable | Pendiente por fase | — |
 | RNF-028 | Sin fase derivable | Pendiente por fase | — |
