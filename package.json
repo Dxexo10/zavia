@@ -17,6 +17,7 @@
     "test:coverage": "vitest run --coverage",
     "test:integration": "vitest run tests/integration",
     "test:e2e": "playwright test",
+    "check:traceability": "node --experimental-strip-types scripts/check-traceability.ts",
     "db:start": "supabase start",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

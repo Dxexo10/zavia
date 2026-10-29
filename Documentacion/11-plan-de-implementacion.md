@@ -1,6 +1,6 @@
 # 11 · Plan de Implementación — Zavia
 
-> Estado: BORRADOR v0.3 · Convierte los documentos 00 a 10 en **15 fases ejecutables** por el agente (Codex), cada una con los documentos que debe leer, sus tareas, sus criterios de aceptación y una **parada obligatoria** para tu confirmación.
+> Estado: BORRADOR v0.4 · Convierte los documentos 00 a 10 en **15 fases ejecutables** por el agente (Codex), cada una con los documentos que debe leer, sus tareas, sus criterios de aceptación y una **parada obligatoria** para tu confirmación.
 > El agente **nunca** lee los 13 documentos de golpe: en cada fase lee solo los que esta tabla le indica (más `AGENTS.md`).
 
 ## 1. Cómo funciona el plan
@@ -73,7 +73,7 @@ Una fase solo se cierra cuando se cumple **todo** esto, con evidencia (salida de
 ---
 
 ### F1 · Cimientos y herramientas · M
-**Leer:** `AGENTS.md`, 05 (§2 a 4, 8 a 10), 02 (RNF-048 a 062), 10 (§1 a 4, 14, 16/T1), 08 (§3 y prompt D1).
+**Leer:** `AGENTS.md`, 05 (§2 a 4, 8 a 10), 02 (RNF-048 a 062), 10 (§1 a 4, 14, 16/T1), 08 (§3 y prompt D1), 03 (**solo los valores numéricos y umbrales** para `business-constants.ts`; sin fórmulas ni lógica, que son de F2), 06 (§2 y 3: sobre de respuesta y catálogo de códigos de error) y 09 (§4.7 secretos, §4.8 cadena de suministro y SEG-LOG-04, para `.env.example`, CI y `SECURITY.md`).
 
 | Tarea | Detalle |
 |-------|---------|
