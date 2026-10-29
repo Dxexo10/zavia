@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { test } from "node:test";
+import { test } from "vitest";
 import assert from "node:assert/strict";
 
 test("[RNF-048][RNF-062] el proyecto declara TypeScript estricto y scripts base", async () => {

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { test } from "node:test";
+import { test } from "vitest";
 
 test("[RNF-049][RNF-051][RNF-052] la calidad usa LF y protege las capas", async () => {
   const [attributes, prettier, cruiser] = await Promise.all([

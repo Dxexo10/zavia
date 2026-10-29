@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { test } from "node:test";
+import { it, test } from "vitest";
 
 const constantsSource = await readFile(
   new URL("../../src/config/business-constants.ts", import.meta.url),
@@ -90,9 +90,6 @@ test("[RNF-058] logger acepta únicamente la lista blanca documentada", () => {
   assert.doesNotMatch(loggerSource, /password|token|amount|description|email/i);
 });
 
-test("[RNF-045] pendiente: las claves errors.<CODE> se verificarán al existir messages/es.json y messages/en.json", async () => {
-  const esExists = await import("node:fs").then(({ existsSync }) =>
-    existsSync("src/messages/es.json")
-  );
-  assert.equal(esExists, false);
-});
+it.todo(
+  "[RNF-045][RNF-044] paridad de claves ES/EN y traducción de cada ErrorCode (se activa en F4-T04)"
+);

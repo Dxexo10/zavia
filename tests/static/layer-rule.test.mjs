@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { exec } from "node:child_process";
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { promisify } from "node:util";
-import { test } from "node:test";
+import { test } from "vitest";
 
 const execute = promisify(exec);
 const fixtureDirectory = new URL("../../src/domain/__layer-rule-test__/", import.meta.url);
