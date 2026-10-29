@@ -26,7 +26,7 @@ module.exports = {
       name: "infrastructure-must-not-depend-on-ui",
       severity: "error",
       from: { path: "^src[\\\\/]infrastructure" },
-      to: { path: "^src[\\\\/](app|components)" }
+      to: { path: "^src[\\\\/](app|components)[\\\\/]" }
     }
   ],
   options: {
