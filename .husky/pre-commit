@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if command -v pnpm >/dev/null 2>&1; then
+  pnpm lint-staged
+else
+  pnpm.cmd lint-staged
+fi
