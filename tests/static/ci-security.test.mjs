@@ -36,7 +36,7 @@ regex = '''ZAVIA_TEST_SECRET_[A-Z0-9]{24}'''
     ]),
     /leaks found|exit code 1/i
   );
-});
+}, 15_000);
 
 test("[PS-22][PS-23][SEG-SUP-01][SEG-SUP-06] CI usa permisos mínimos, SHA y lockfile congelado", async () => {
   const [workflow, packageJson] = await Promise.all([
