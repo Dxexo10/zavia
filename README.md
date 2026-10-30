@@ -17,6 +17,7 @@ Aplicación web de finanzas personales construida por fases y con TDD.
 - Testing Library React `16.3.3`
 - jest-dom `7.0.1`
 - jsdom `30.1.3`
+- Impeccable `4.8.0` (motor `0.1.18`, licencia Apache-2.0)
 
 ## Desarrollo local
 

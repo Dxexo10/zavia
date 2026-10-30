@@ -10,3 +10,10 @@ tsconfig.tsbuildinfo
 
 supabase/.temp/
 supabase/.branches/
+
+.impeccable/config.local.json
+.impeccable/hook.cache.json
+.impeccable/questions/
+.impeccable/*.png
+.impeccable/*.jpg
+.impeccable/*.webp
