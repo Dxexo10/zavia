@@ -16,7 +16,7 @@ afterEach(async () => {
   createdUserId = undefined;
 });
 
-test("[SEG-AUT-02][RNF-019] loginAs crea una sesión local válida y consulta como su propio usuario", async () => {
+test("[SEG-AUT-02] loginAs crea una sesión local válida y consulta como su propio usuario", async () => {
   credentials = await localSupabaseCredentials();
   const email = `vitest-${crypto.randomUUID()}@local.zavia.test`;
   const user = await createLocalTestUser(credentials, email);

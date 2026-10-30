@@ -76,7 +76,10 @@ test("[RNF-053] CI valida los mensajes convencionales de los commits del Pull Re
 });
 
 test("[RNF-025][SEG-SEC-01] .env.example contiene solo los nombres documentados", async () => {
-  const source = await readFile(new URL("../../.env.example", import.meta.url), "utf8");
+  const [source, gitignore] = await Promise.all([
+    readFile(new URL("../../.env.example", import.meta.url), "utf8"),
+    readFile(new URL("../../.gitignore", import.meta.url), "utf8")
+  ]);
   const expected = [
     "NEXT_PUBLIC_APP_URL",
     "NEXT_PUBLIC_SUPABASE_URL",
@@ -91,4 +94,6 @@ test("[RNF-025][SEG-SEC-01] .env.example contiene solo los nombres documentados"
     source.trim().split(/\r?\n/).filter(Boolean),
     expected.map((name) => `${name}=`)
   );
+  assert.match(gitignore, /^\.env\*$/m);
+  assert.match(gitignore, /^!\.env\.example$/m);
 });

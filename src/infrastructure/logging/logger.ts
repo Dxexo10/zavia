@@ -13,7 +13,13 @@ export type LogSink = (entry: LogEntry) => void;
 export function createLogger(sink: LogSink) {
   return {
     log(entry: LogEntry): void {
-      sink(entry);
+      sink({
+        requestId: entry.requestId,
+        action: entry.action,
+        result: entry.result,
+        ...(entry.errorCode === undefined ? {} : { errorCode: entry.errorCode }),
+        durationMs: entry.durationMs
+      });
     }
   };
 }

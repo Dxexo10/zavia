@@ -8,7 +8,7 @@
 | F1-T02 | ESLint, Prettier LF, Husky, commitlint y dependency-cruiser | `2480ae2` |
 | F1-T03 | Constantes, reloj inyectable, `Result`/`AppError`/`ErrorCode` y logger | `3a7cac2` |
 | F1-T04 | Vitest, helpers, Supabase local y prueba real de `loginAs` | `d4af186` |
-| F1-T05 | Matriz de trazabilidad, CODEOWNERS y mapeo por fases | `6a84999`, `9b8426f` |
+| F1-T05 | Matriz de trazabilidad, CODEOWNERS y lectura del mapa oficial por fases | `6a84999`, `9b8426f`, `fix(F1-T05)` actual |
 | F1-T06 | CI, Dependabot, Gitleaks CLI, secretos y seguridad de suministro | `f454738`, `d46e91d`, `63d6f8b`, `a31da7b` |
 | F1-T07 | Impeccable, `PRODUCT.md`, `DESIGN.md` y suma del motor verificada | `f9e7425` |
 | F1-T08 | README inicial, estado, plantilla y comandos base | `0990bad` |
@@ -33,7 +33,9 @@ La prueba de integración confirmó que `loginAs` crea, consulta y elimina un us
 
 ## 3. IDs cubiertos y pendientes
 
-F1 cubre RNF-048, RNF-049, RNF-052, RNF-053, RNF-055, RNF-057, RNF-058 y RNF-062, además de los IDs de seguridad, calidad y entorno citados por sus pruebas.
+Tras la corrección de trazabilidad, F1 cubre RNF-024, RNF-025, RNF-048, RNF-049, RNF-052, RNF-053, RNF-055, RNF-057, RNF-058 y RNF-062; SEG-INP-02, SEG-LOG-01, SEG-LOG-04, SEG-SEC-01, SEG-SEC-02, SEG-SUP-01, SEG-SUP-02, SEG-SUP-03, SEG-SUP-05, SEG-SUP-06 y SEG-SUP-08; y PS-20, PS-22, PS-23, PS-24, PS-27 y PS-30. La matriz ahora incluye RF, RN, RNF, SEG y PS, con desglose por fase y prefijo.
+
+Se retiraron citas que no demostraban su requisito: RNF-019 de `loginAs` (no prueba aislamiento entre dos usuarios), RNF-039 de los contratos de error (no verifica mensajes útiles para usuarios), RNF-051 de la regla de capas (no demuestra que las reglas de negocio de 03 estén implementadas) y RNF-058 de los contratos de error (el control real queda en la prueba de lista blanca del logger). RNF-050 no tenía cita de prueba y permanece en F2; RNF-053 se conserva porque el CI valida los mensajes convencionales de los commits del Pull Request.
 
 La única deuda deliberada es `[RNF-045][RNF-044]`: un `it.todo` para paridad ES/EN y `errors.<CODE>`. Está registrada en `tests/traceability.exceptions.md`, vence en F4-T04 y la puerta de F4 exige activarla y dejarla en verde.
 
@@ -45,7 +47,7 @@ La documentación de Supabase menciona `inbucket.enabled`; Supabase CLI 2.121.0 
 
 ## 5. Propuestas de cambio a la documentación
 
-El documento 11 v0.4 ya incorpora correctamente a F1: documento 03 (solo valores), documento 06 (§2–3) y documento 09 (§4.7, §4.8 y SEG-LOG-04).
+El documento 11 v0.5 incorpora el bloque `mapa-id-fase` como fuente de verdad de la matriz. La herramienta dejó de inferir fases por rangos y falla ante IDs vigentes sin mapa o IDs inexistentes/excluidos dentro del mapa.
 
 Para evitar reasignaciones ambiguas, conviene que el plan mantenga una tabla ID → fase para requisitos transversales. La fase debe ser aquella en que queda satisfecha su verificación completa, no la primera fase que lo menciona.
 

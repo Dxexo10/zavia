@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { test } from "vitest";
 
-test("[SEG-SUP-08] Impeccable queda fijada, verificada y con contexto compartible", async () => {
+test("[SEG-SUP-08][PS-24] Impeccable queda fijada, verificada y con contexto compartible", async () => {
   const [readme, product, design, gitignore, configuration, hooks, version, checksums] =
     await Promise.all([
       readFile(new URL("../../README.md", import.meta.url), "utf8"),

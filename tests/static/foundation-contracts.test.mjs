@@ -48,14 +48,14 @@ for (const declaration of constantsSource.matchAll(
   });
 }
 
-test("[RNF-039][RNF-058] Result y AppError solo exponen códigos y requestId", () => {
+test("Result y AppError solo exponen códigos y requestId", () => {
   assert.match(resultSource, /code: ErrorCode/);
   assert.match(resultSource, /fieldErrors\?: Record<string, ErrorCode>/);
   assert.match(resultSource, /retryAfterSeconds\?: number/);
   assert.match(resultSource, /requestId: string/);
 });
 
-test("[RNF-039] ErrorCode contiene exactamente el catálogo actual", () => {
+test("ErrorCode contiene exactamente el catálogo actual", () => {
   const codes = [
     "VALIDATION_FAILED",
     "UNAUTHENTICATED",
@@ -82,7 +82,7 @@ test("[RNF-039] ErrorCode contiene exactamente el catálogo actual", () => {
   assert.doesNotMatch(resultSource, /INVALID_CREDENTIALS|EMAIL_NOT_CONFIRMED/);
 });
 
-test("[RNF-058] logger acepta únicamente la lista blanca documentada", () => {
+test("logger declara los campos de la lista blanca", () => {
   assert.match(loggerSource, /requestId: string/);
   assert.match(loggerSource, /action: string/);
   assert.match(loggerSource, /errorCode\?: ErrorCode/);

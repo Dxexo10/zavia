@@ -8,7 +8,7 @@ const execute = promisify(exec);
 const fixtureDirectory = new URL("../../src/domain/__layer-rule-test__/", import.meta.url);
 const fixtureFile = new URL("illegal-import.ts", fixtureDirectory);
 
-test("[RNF-051] dependency-cruiser rechaza una importación ilegal desde domain", async () => {
+test("dependency-cruiser rechaza una importación ilegal desde domain", async () => {
   await mkdir(fixtureDirectory, { recursive: true });
   await writeFile(fixtureFile, 'import "next";\nexport const value = 1;\n');
 
