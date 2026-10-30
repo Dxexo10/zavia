@@ -64,6 +64,17 @@ test("[PS-22][PS-23][SEG-SUP-01][SEG-SUP-06] CI usa permisos mínimos, SHA y loc
   );
 });
 
+test("[RNF-053] CI valida los mensajes convencionales de los commits del Pull Request", async () => {
+  const workflow = await readFile(
+    new URL("../../.github/workflows/ci.yml", import.meta.url),
+    "utf8"
+  );
+
+  assert.match(workflow, /pnpm exec commitlint --from/);
+  assert.match(workflow, /github\.event\.pull_request\.base\.sha/);
+  assert.match(workflow, /github\.event\.pull_request\.head\.sha/);
+});
+
 test("[RNF-025][SEG-SEC-01] .env.example contiene solo los nombres documentados", async () => {
   const source = await readFile(new URL("../../.env.example", import.meta.url), "utf8");
   const expected = [

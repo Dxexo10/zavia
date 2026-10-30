@@ -19,6 +19,16 @@ const DOCUMENTS = [
   "09-seguridad.md"
 ];
 
+const PHASE_OVERRIDES = new Map<string, string>([
+  ["RNF-050", "F2"],
+  ["RNF-051", "F2"],
+  ["RNF-054", "F13"],
+  ["RNF-056", "F13"],
+  ["RNF-059", "F5"],
+  ["RNF-060", "F13"],
+  ["RNF-061", "F13"]
+]);
+
 function isExcluded(line: string): boolean {
   return /DESCARTAD[OA]|FUSIONAD[OA]|~~/.test(line);
 }
@@ -56,9 +66,10 @@ function parseClosedPhases(state: string): Set<string> {
 
 function derivePhaseById(plan: string, ids: Iterable<string>): Map<string, string> {
   const mapping = new Map<string, string>();
+  const idsToMap = new Set(ids);
   const f1 = plan.match(/\|\s*F1\s*\|[^\n]*\|[^\n]*\|\s*RNF-(\d+)\s+a\s+(\d+)/);
   if (f1) {
-    for (const id of ids) {
+    for (const id of idsToMap) {
       const number = Number(id.slice(4));
       if (id.startsWith("RNF-") && number >= Number(f1[1]) && number <= Number(f1[2]))
         mapping.set(id, "F1");
@@ -66,12 +77,13 @@ function derivePhaseById(plan: string, ids: Iterable<string>): Map<string, strin
   }
   const f2 = plan.match(/\|\s*F2\s*\|[^\n]*\|[^\n]*\|\s*RN-(\d+)\s+a\s+(\d+)/);
   if (f2) {
-    for (const id of ids) {
+    for (const id of idsToMap) {
       const number = Number(id.slice(3));
       if (id.startsWith("RN-") && number >= Number(f2[1]) && number <= Number(f2[2]))
         mapping.set(id, "F2");
     }
   }
+  for (const [id, phase] of PHASE_OVERRIDES) if (idsToMap.has(id)) mapping.set(id, phase);
   return mapping;
 }
 

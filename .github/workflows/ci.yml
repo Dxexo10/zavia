@@ -40,6 +40,8 @@ jobs:
           "$workdir/gitleaks" git "$GITHUB_WORKSPACE" --redact=100
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: pnpm audit --audit-level=high
+      - name: Verificar mensajes convencionales del Pull Request
+        run: pnpm exec commitlint --from "${{ github.event.pull_request.base.sha }}" --to "${{ github.event.pull_request.head.sha }}"
       - name: Verificar acciones fijadas por SHA
         run: >
           node -e "const fs=require('node:fs'); const source=fs.readFileSync('.github/workflows/ci.yml','utf8'); const refs=[...source.matchAll(/uses:\\s+[^@\\s]+@([^\\s#]+)/g)].map(([,ref])=>ref); if(refs.some((ref)=>!/^[a-f0-9]{40}$/.test(ref))) process.exit(1);"

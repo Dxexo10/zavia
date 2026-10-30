@@ -127,18 +127,18 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-047 | Sin fase derivable | Pendiente por fase | — |
 | RNF-048 | F1 | Cubierto | tests/unit/smoke.test.mjs |
 | RNF-049 | F1 | Cubierto | tests/static/quality-config.test.mjs |
-| RNF-050 | F1 | Pendiente por fase | — |
-| RNF-051 | F1 | Cubierto | tests/static/layer-rule.test.mjs<br>tests/static/quality-config.test.mjs |
+| RNF-050 | F2 | Cubierto | tests/unit/check-traceability.test.ts |
+| RNF-051 | F2 | Cubierto | tests/static/layer-rule.test.mjs<br>tests/static/quality-config.test.mjs |
 | RNF-052 | F1 | Cubierto | tests/static/quality-config.test.mjs |
-| RNF-053 | F1 | Pendiente por fase | — |
-| RNF-054 | F1 | Pendiente por fase | — |
+| RNF-053 | F1 | Cubierto | tests/static/ci-security.test.mjs |
+| RNF-054 | F13 | Pendiente por fase | — |
 | RNF-055 | F1 | Cubierto | tests/unit/check-traceability.test.ts |
-| RNF-056 | F1 | Pendiente por fase | — |
+| RNF-056 | F13 | Pendiente por fase | — |
 | RNF-057 | F1 | Cubierto | tests/unit/clock.test.ts<br>tests/static/foundation-contracts.test.mjs |
 | RNF-058 | F1 | Cubierto | tests/static/foundation-contracts.test.mjs |
-| RNF-059 | F1 | Pendiente por fase | — |
-| RNF-060 | F1 | Pendiente por fase | — |
-| RNF-061 | F1 | Pendiente por fase | — |
+| RNF-059 | F5 | Pendiente por fase | — |
+| RNF-060 | F13 | Pendiente por fase | — |
+| RNF-061 | F13 | Pendiente por fase | — |
 | RNF-062 | F1 | Cubierto | tests/unit/smoke.test.mjs |
 | RNF-063 | Sin fase derivable | Pendiente por fase | — |
 | RNF-064 | Sin fase derivable | Pendiente por fase | — |
