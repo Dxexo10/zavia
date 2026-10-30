@@ -39,16 +39,27 @@ regex = '''ZAVIA_TEST_SECRET_[A-Z0-9]{24}'''
 });
 
 test("[PS-22][PS-23][SEG-SUP-01][SEG-SUP-06] CI usa permisos mínimos, SHA y lockfile congelado", async () => {
-  const workflow = await readFile(
-    new URL("../../.github/workflows/ci.yml", import.meta.url),
-    "utf8"
-  );
+  const [workflow, packageJson] = await Promise.all([
+    readFile(new URL("../../.github/workflows/ci.yml", import.meta.url), "utf8"),
+    readFile(new URL("../../package.json", import.meta.url), "utf8")
+  ]);
   assert.match(workflow, /^on:\s*\r?\n\s*pull_request:/m);
   assert.doesNotMatch(workflow, /pull_request_target/);
   assert.match(workflow, /^permissions:\s*\r?\n\s*contents: read/m);
   assert.match(workflow, /pnpm install --frozen-lockfile/);
   assert.match(workflow, /uses:\s+[^@\s]+@[a-f0-9]{40}/g);
   assert.match(workflow, /pendiente \(se activa en F4\/F13\)/);
+  assert.match(workflow, /fetch-depth: 0/);
+  assert.doesNotMatch(workflow, /gitleaks\/gitleaks-action/);
+  assert.match(workflow, /gitleaks_8\.30\.1_linux_x64\.tar\.gz/);
+  assert.match(workflow, /gitleaks_8\.30\.1_checksums\.txt/);
+  assert.match(workflow, /sha256sum -c/);
+  assert.match(workflow, /gitleaks git \./);
+  assert.match(workflow, /timeout-minutes: 10/);
+  assert.equal(
+    JSON.parse(packageJson).scripts["test:coverage"],
+    "vitest run --coverage --exclude tests/integration/**"
+  );
 });
 
 test("[RNF-025][SEG-SEC-01] .env.example contiene solo los nombres documentados", async () => {

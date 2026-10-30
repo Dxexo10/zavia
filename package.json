@@ -14,7 +14,7 @@
     "lint": "eslint src tests --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "vitest run --coverage --exclude tests/integration/**",
     "test:integration": "vitest run tests/integration",
     "test:e2e": "playwright test",
     "check:traceability": "node --experimental-strip-types scripts/check-traceability.ts",

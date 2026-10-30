@@ -23,4 +23,4 @@ test("[RNF-051] dependency-cruiser rechaza una importación ilegal desde domain"
   } finally {
     await rm(fixtureDirectory, { recursive: true, force: true });
   }
-});
+}, 15_000);

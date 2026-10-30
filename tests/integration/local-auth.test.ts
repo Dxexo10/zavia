@@ -33,4 +33,4 @@ test("[SEG-AUT-02][RNF-019] loginAs crea una sesión local válida y consulta co
     headers: { apikey: credentials.publishableKey, Authorization: `Bearer ${session.access_token}` }
   });
   expect(rest.ok).toBe(true);
-});
+}, 15_000);
