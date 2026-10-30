@@ -53,8 +53,10 @@ test("[PS-22][PS-23][SEG-SUP-01][SEG-SUP-06] CI usa permisos mínimos, SHA y loc
   assert.doesNotMatch(workflow, /gitleaks\/gitleaks-action/);
   assert.match(workflow, /gitleaks_8\.30\.1_linux_x64\.tar\.gz/);
   assert.match(workflow, /gitleaks_8\.30\.1_checksums\.txt/);
-  assert.match(workflow, /sha256sum -c/);
-  assert.match(workflow, /gitleaks git \./);
+  assert.match(workflow, /mktemp -d/);
+  assert.match(workflow, /grep -E "\^\[\[:xdigit:\]\]\{64\} {2}\$asset\$"/);
+  assert.match(workflow, /sha256sum --check --strict/);
+  assert.match(workflow, /gitleaks" git "\$GITHUB_WORKSPACE"/);
   assert.match(workflow, /timeout-minutes: 10/);
   assert.equal(
     JSON.parse(packageJson).scripts["test:coverage"],
