@@ -26,6 +26,10 @@ pnpm db:start
 pnpm test
 ```
 
+Comandos de calidad: `pnpm lint`, `pnpm typecheck`, `pnpm check:layers`,
+`pnpm check:traceability`, `pnpm detect:design` y `pnpm format:check`.
+`pnpm db:reset` recrea la base local; úsalo solo con datos locales prescindibles.
+
 Los scripts de instalación de dependencias están bloqueados por defecto mediante `.npmrc`.
 La única instalación posterior permitida en esta fase es la de los navegadores de Playwright,
 cuando una prueba E2E lo necesite: `pnpm exec playwright install`.

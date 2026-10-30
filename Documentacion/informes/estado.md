@@ -1,7 +1,7 @@
 # Estado de implementación — Zavia
 - Fase actual: F1
-- Última tarea completada: F1-T07
-- Próxima tarea: F1-T08 (no iniciar hasta autorización del autor)
+- Última tarea completada: F1-T08
+- Próxima tarea: puerta de control de F1 (pendiente de confirmar CI verde en el Pull Request)
 - Fases cerradas: F0
 - Bloqueos / decisiones pendientes del autor:
 - Nota F3-T08: comprobar si `supabase gen types` funciona con `pg_meta` excluido; si no, reactivarlo en `supabase/config.toml` antes de generar tipos.

@@ -11,4 +11,6 @@ test("[RNF-048][RNF-062] el proyecto declara TypeScript estricto y scripts base"
   assert.ok(packageJson.scripts.lint);
   assert.ok(packageJson.scripts.typecheck);
   assert.ok(packageJson.scripts.test);
+  assert.ok(packageJson.scripts["detect:design"]);
+  assert.ok(packageJson.scripts["db:reset"]);
 });

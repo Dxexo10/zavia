@@ -61,6 +61,7 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm lint
       - run: pnpm check:layers
+      - run: pnpm detect:design
       - run: pnpm check:traceability
 
   fast:
