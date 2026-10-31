@@ -210,7 +210,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-050 | F2 | Pendiente por fase | — |
 | RNF-051 | F2 | Pendiente por fase | — |
 | RNF-052 | F1 | Cubierto | tests/static/quality-config.test.mjs |
-| RNF-053 | F1 | Cubierto | tests/static/ci-security.test.mjs |
+| RNF-053 | F1 | Cubierto | tests/static/ci-security.test.mjs<br>tests/static/quality-config.test.mjs |
 | RNF-054 | F13 | Pendiente por fase | — |
 | RNF-055 | F1 | Cubierto | tests/unit/check-traceability.test.ts |
 | RNF-056 | F13 | Pendiente por fase | — |

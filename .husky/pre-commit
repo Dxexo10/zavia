@@ -1,7 +1,4 @@
 #!/usr/bin/env sh
 
-if command -v pnpm >/dev/null 2>&1; then
-  pnpm lint-staged
-else
-  pnpm.cmd lint-staged
-fi
+root=$(git rev-parse --show-toplevel) || exit 1
+exec "$root/node_modules/.bin/lint-staged"

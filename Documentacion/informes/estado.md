@@ -1,6 +1,6 @@
 # Estado de implementación — Zavia
 - Fase actual: F1 cerrada (corrección de trazabilidad pendiente de CI)
-- Última tarea completada: corrección de F1-T05 según el mapa oficial de 11 §7
+- Última tarea completada: corrección de F1-T02 para hooks Husky portables (pendiente de CI)
 - Próxima tarea: F2-T01 (no iniciar hasta `CONTINUAR` del autor)
 - Fases cerradas: F1
 - F0: parcial. Listos Docker Desktop, Node, pnpm y Git. Pendientes del autor: proyectos Supabase de staging y producción (con correo/contraseña desactivado), Vercel, Turnstile, cliente OAuth de Google y `.env.local`; bloquean F3 y F5.

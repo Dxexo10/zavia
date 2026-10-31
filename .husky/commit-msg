@@ -1,7 +1,4 @@
 #!/usr/bin/env sh
 
-if command -v pnpm >/dev/null 2>&1; then
-  pnpm commitlint --edit "$1"
-else
-  pnpm.cmd commitlint --edit "$1"
-fi
+root=$(git rev-parse --show-toplevel) || exit 1
+exec "$root/node_modules/.bin/commitlint" --edit "$1"

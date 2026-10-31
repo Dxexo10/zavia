@@ -15,3 +15,18 @@ test("[RNF-049][RNF-052] la calidad usa LF, complejidad máxima y protege las ca
   assert.match(cruiser, /domain-must-stay-pure/);
   assert.match(eslint, /complexity:\s*\["error", 10\]/);
 });
+
+test("[RNF-053] hooks POSIX invocan los binarios locales sin depender de pnpm", async () => {
+  const [preCommit, commitMsg] = await Promise.all([
+    readFile(new URL("../../.husky/pre-commit", import.meta.url), "utf8"),
+    readFile(new URL("../../.husky/commit-msg", import.meta.url), "utf8")
+  ]);
+
+  for (const hook of [preCommit, commitMsg]) {
+    assert.match(hook, /^#!\/usr\/bin\/env sh/m);
+    assert.match(hook, /git rev-parse --show-toplevel/);
+    assert.doesNotMatch(hook, /pnpm(?:\.cmd)?/);
+  }
+  assert.match(preCommit, /node_modules\/.bin\/lint-staged/);
+  assert.match(commitMsg, /node_modules\/.bin\/commitlint/);
+});
