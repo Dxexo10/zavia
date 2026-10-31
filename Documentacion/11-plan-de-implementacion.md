@@ -1,6 +1,6 @@
 # 11 · Plan de Implementación — Zavia
 
-> Estado: BORRADOR v0.4 · Convierte los documentos 00 a 10 en **15 fases ejecutables** por el agente (Codex), cada una con los documentos que debe leer, sus tareas, sus criterios de aceptación y una **parada obligatoria** para tu confirmación.
+> Estado: BORRADOR v0.5 · Convierte los documentos 00 a 10 en **15 fases ejecutables** por el agente (Codex), cada una con los documentos que debe leer, sus tareas, sus criterios de aceptación y una **parada obligatoria** para tu confirmación.
 > El agente **nunca** lee los 13 documentos de golpe: en cada fase lee solo los que esta tabla le indica (más `AGENTS.md`).
 
 ## 1. Cómo funciona el plan
@@ -308,3 +308,62 @@ Una fase solo se cierra cuando se cumple **todo** esto, con evidencia (salida de
 ## 6. Cambios a la documentación durante la implementación
 
 Si una fase revela un error o una laguna en los documentos, el agente **no modifica los documentos**: lo registra en el informe (§5, punto 5). Tú decides y, si procede, se actualiza el documento (con nueva versión) **antes** de continuar. Así los documentos siguen siendo la fuente de verdad y las pruebas no se desalinean.
+
+## 7. Mapa ID → fase (fuente de verdad de `check-traceability`)
+
+**Definición.** La *fase* de un ID es la **fase de activación**: la primera cuya puerta de control exige que exista una prueba que lo verifique y que pase. Desde entonces esa prueba queda en la suite de regresión y se vuelve a ejecutar en todas las fases siguientes. Los requisitos transversales (por ejemplo, RF-026 o RNF-033) se activan con sus componentes base y cada pantalla nueva debe cumplirlos en su propia fase.
+
+**Reglas para la herramienta:**
+1. Lee el bloque `mapa-id-fase` de abajo; ya **no deduce** la fase por heurística.
+2. **Falla** si un ID vigente de los documentos 01, 02, 03 o 09 no aparece en el mapa, o si el mapa contiene un ID inexistente o descartado.
+3. Falla por un ID solo si su fase ya está **cerrada** y no tiene una prueba que lo verifique de verdad; los demás se listan como «pendientes por fase».
+4. Excluye los IDs marcados DESCARTADO, FUSIONADO, tachados con `~~`, «no aplica» o «Reformulado» (RF-003, RF-004, RF-027, RNF-018, RNF-023, SEG-AUT-01, 03, 05 y 08, SEG-INF-03, PS-14 y PS-15).
+5. Una prueba **solo cita un ID si verifica el comportamiento que ese ID describe**. Que una prueba «toque» el tema no basta (por ejemplo, un *helper* de sesiones no verifica el aislamiento entre usuarios).
+6. Los E2E (`E2E-xx`) no se rastrean aquí: son pruebas, no requisitos.
+7. Cambiar una fase exige actualizar este documento y subir su versión; el agente no lo modifica.
+
+```mapa-id-fase
+F1: RNF-024, RNF-025, RNF-048, RNF-049, RNF-052, RNF-053, RNF-055, RNF-057, RNF-058, RNF-062
+F1: SEG-INP-02, SEG-LOG-01, SEG-LOG-04, SEG-SEC-01, SEG-SEC-02, SEG-SUP-01, SEG-SUP-02, SEG-SUP-03, SEG-SUP-05, SEG-SUP-06, SEG-SUP-08
+F1: PS-20, PS-22, PS-23, PS-24, PS-27, PS-30
+F2: RN-001, RN-002, RN-003, RN-004, RN-005, RN-007, RN-010, RN-011, RN-012, RN-013, RN-014, RN-020, RN-021, RN-022, RN-023, RN-024, RN-025, RN-026, RN-027, RN-030, RN-031, RN-040, RN-041, RN-042, RN-043, RN-044, RN-045, RN-046, RN-050, RN-051, RN-052, RN-060, RN-061, RN-070
+F2: RNF-013, RNF-014, RNF-032, RNF-050, RNF-051
+F2: SEG-INP-03
+F3: RN-006, RN-008, RN-009
+F3: RNF-007, RNF-016, RNF-017, RNF-019, RNF-020, RNF-027, RNF-065, RNF-067, RNF-068, RNF-069
+F3: SEG-AUZ-01, SEG-AUZ-02, SEG-AUZ-06, SEG-AUZ-07, SEG-AUZ-08, SEG-AUZ-09, SEG-AUZ-10, SEG-DEM-04, SEG-DEM-06, SEG-INF-01, SEG-INP-05, SEG-INP-06, SEG-PRV-02
+F3: PS-01, PS-02, PS-05, PS-06, PS-07, PS-09, PS-31, PS-32
+F4: RF-025, RF-026, RF-038, RF-039
+F4: RN-071
+F4: RNF-033, RNF-034, RNF-035, RNF-036, RNF-037, RNF-038, RNF-039, RNF-040, RNF-041, RNF-042, RNF-044, RNF-045, RNF-046, RNF-047, RNF-063, RNF-066
+F4: SEG-PRV-04
+F5: RF-001, RF-002, RF-005, RF-028, RF-029
+F5: RN-062, RN-063
+F5: RNF-006, RNF-015, RNF-021, RNF-022, RNF-028, RNF-029, RNF-030, RNF-031, RNF-059, RNF-064, RNF-071, RNF-074
+F5: SEG-AUT-02, SEG-AUT-04, SEG-AUT-06, SEG-AUT-07, SEG-AUT-09, SEG-AUT-10, SEG-AUT-11, SEG-AUT-12, SEG-AUT-13, SEG-AUZ-03, SEG-AUZ-04, SEG-CSR-01, SEG-CSR-02, SEG-DEM-01, SEG-DEM-02, SEG-DEM-03, SEG-DEM-05, SEG-DEM-07, SEG-DEM-08, SEG-DEM-09, SEG-DEM-10, SEG-HDR-01, SEG-HDR-02, SEG-HDR-03, SEG-HDR-04, SEG-HDR-05, SEG-HDR-06, SEG-INF-02, SEG-INP-01, SEG-INP-04, SEG-INP-10, SEG-LOG-02, SEG-PRV-05, SEG-SEC-03
+F5: PS-04, PS-08, PS-10, PS-11, PS-12, PS-13, PS-18, PS-19, PS-21, PS-29
+F6: RF-006, RF-007, RF-008, RF-009, RF-010, RF-013, RF-040
+F6: RNF-011
+F6: SEG-AUZ-05, SEG-INP-07
+F6: PS-03, PS-16, PS-28
+F7: RF-020, RF-021, RF-022, RF-023
+F7: RNF-001, RNF-002, RNF-004, RNF-005
+F8: RF-014, RF-015, RF-016, RF-017, RF-018, RF-019
+F9: RF-011, RF-012
+F9: RNF-026
+F9: SEG-CSR-03, SEG-INP-08, SEG-INP-09, SEG-PRV-03
+F9: PS-17
+F10: RF-030, RF-031, RF-032
+F10: RNF-010
+F10: SEG-CSR-04
+F10: PS-26
+F11: RF-033, RF-034, RF-035, RF-036, RF-037
+F12: RF-024, RF-041
+F13: RNF-003, RNF-043, RNF-054, RNF-056, RNF-060, RNF-061, RNF-072, RNF-073
+F13: SEG-AGT-01, SEG-AGT-02, SEG-AGT-03, SEG-AGT-04, SEG-AGT-05, SEG-AGT-06, SEG-AGT-07, SEG-LOG-05, SEG-PRV-01, SEG-SUP-04, SEG-SUP-07, SEG-SUP-09
+F13: PS-25
+F14: RNF-008, RNF-009, RNF-012, RNF-070
+F14: SEG-INF-04, SEG-INF-05, SEG-INF-06, SEG-INF-07, SEG-INF-08, SEG-LOG-03, SEG-PRV-06, SEG-SEC-04, SEG-SEC-05, SEG-SEC-06
+```
+
+Resumen de IDs por fase de activación: F1 27, F2 40, F3 34, F4 22, F5 63, F6 13, F7 8, F8 6, F9 8, F10 6, F11 5, F12 2, F13 21, F14 14. Total: 269.

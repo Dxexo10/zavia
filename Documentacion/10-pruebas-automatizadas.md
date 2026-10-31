@@ -1,6 +1,6 @@
 # 10 · Pruebas Automatizadas — Zavia
 
-> Estado: BORRADOR v0.3 · Convierte los requerimientos (01, 02), las reglas (03), el contrato (06), el diseño (07) y la seguridad (09) en un plan de pruebas **ejecutable y trazable**.
+> Estado: BORRADOR v0.4 · Convierte los requerimientos (01, 02), las reglas (03), el contrato (06), el diseño (07) y la seguridad (09) en un plan de pruebas **ejecutable y trazable**.
 > 🔎 Las herramientas y claves de prueba de terceros (Cloudflare Turnstile, Playwright, Lighthouse CI, Stryker) cambian: el agente verifica su documentación vigente antes de configurarlas.
 
 ## 1. Principios
@@ -50,7 +50,7 @@ scripts/check-traceability.ts
 ```
 
 - **Nombre de cada prueba:** `[RF-007][RN-002] …descripción…` (los IDs entre corchetes al inicio). Los bloques `describe` llevan el ID principal.
-- **`scripts/check-traceability.ts`** (RNF-055): extrae los IDs de los documentos 01, 02, 03 y 09 y de los títulos de pruebas; **falla** si un RF *Must*, un RN, un RNF automatizable o un `SEG-…` no aparece en ninguna prueba y no está en `traceability.exceptions.md`. Genera `Documentacion/informes/trazabilidad.md` (matriz ID → pruebas). Los IDs marcados **DESCARTADO** o **FUSIONADO** (RF-003, RF-004, RF-027, RNF-018, PS-14, PS-15, E2E-06…) se excluyen de la verificación.
+- **`scripts/check-traceability.ts`** (RNF-055): extrae los IDs de los documentos 01, 02, 03 y 09 y de los títulos de pruebas; **falla** si un RF *Must*, un RN, un RNF automatizable o un `SEG-…` no aparece en ninguna prueba y no está en `traceability.exceptions.md`. Genera `Documentacion/informes/trazabilidad.md` (matriz ID → pruebas). Los IDs marcados **DESCARTADO** o **FUSIONADO** (RF-003, RF-004, RF-027, RNF-018, PS-14, PS-15, E2E-06…) se excluyen de la verificación. **La fase de cada ID sale de `11-plan-de-implementacion.md` §7** (bloque `mapa-id-fase`): un ID vigente que no esté en el mapa hace fallar la herramienta, y **una prueba solo puede citar un ID cuyo comportamiento verifica de verdad**.
 - **Fábricas y reloj:** `Clock` inyectable con constante `TODAY` fija en `America/Lima`; toda fecha de prueba se calcula respecto a ella. Perú no usa horario de verano, lo que simplifica los casos límite (UTC−5).
 
 ## 4. Flujo TDD por tarea (para el agente)
