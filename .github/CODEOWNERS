@@ -1,0 +1,10 @@
+# Archivos de control y seguridad: revisión del autor requerida.
+/AGENTS.md @Dxexo10
+/PROMPT_MAESTRO.md @Dxexo10
+/Documentacion/** @Dxexo10
+/tests/integration/db/** @Dxexo10
+/tests/**/ps-*.test.* @Dxexo10
+/tests/**/security/** @Dxexo10
+/supabase/migrations/** @Dxexo10
+/.github/** @Dxexo10
+/scripts/check-traceability.ts @Dxexo10

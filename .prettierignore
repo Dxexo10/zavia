@@ -1,0 +1,8 @@
+.agents/
+Documentacion/
+AGENTS.md
+PROMPT_MAESTRO.md
+node_modules/
+.next/
+coverage/
+playwright-report/
