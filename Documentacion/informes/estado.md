@@ -1,11 +1,12 @@
 # Estado de implementación — Zavia
 - Fase actual: F2 en curso
-- Última tarea completada: correcciones de cobertura F2 y configuración local de mutación
-- Próxima tarea: puerta de control F2 (bloqueada)
+- Última tarea completada: controles manuales de mutación F2
+- Próxima tarea: completar las pruebas y comportamientos obligatorios pendientes de F2
 - Fases cerradas: F1
 - F0: parcial. Listos Docker Desktop, Node, pnpm y Git. Pendientes del autor: proyectos Supabase de staging y producción (con correo/contraseña desactivado), Vercel, Turnstile, cliente OAuth de Google y `.env.local`; bloquean F3 y F5.
-- Bloqueos / decisiones pendientes del autor: Docker Desktop no está disponible (falla la prueba de Gitleaks y por tanto la cobertura completa); Stryker 10.0.0 con Vitest completó su ejecución inicial pero terminó sin reporte de mutación. No cerrar F2 hasta resolver ambos.
+- Bloqueos / decisiones pendientes del autor: la puerta F2 no puede cerrarse todavía: faltan comportamientos verificables de las tablas 5.2, 5.6, 5.7, 5.8 y 5.9 del documento 10. F3 y F5 siguen bloqueadas por los prerrequisitos de F0 a cargo del autor.
 - Nota F3-T08: comprobar si `supabase gen types` funciona con `pg_meta` excluido; si no, reactivarlo en `supabase/config.toml` antes de generar tipos.
 - Deuda con vencimiento: `[RNF-045][RNF-044]` es `it.todo` hasta F4-T04, que debe activar la prueba de paridad ES/EN y de `errors.<CODE>` antes de cerrar su puerta.
+- Deuda con vencimiento: F13-T04 debe reevaluar Stryker. El 2026-11-02, `@stryker-mutator/core` y `@stryker-mutator/vitest-runner` 10.0.0 (ambos con más de 14 días) declararon compatibilidad con Vitest >= 2, pero con Vitest 5.0.5 los mutantes no ejecutaron pruebas de forma fiable. Se aplicó mientras tanto el control manual de los mutantes críticos con `pnpm test:mutation-control`; no se añadieron versiones recientes ni se conectó Stryker a CI.
 - Propuestas de cambio a la documentación (sin aplicar): Ninguna pendiente; 11 v0.4 ya añadió 03/06/09 a F1.
 - Versiones fijadas (Next.js, Supabase CLI, impeccable, …): Impeccable 4.8.0 con motor 0.1.18 (Apache-2.0); resto en README.
