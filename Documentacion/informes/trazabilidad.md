@@ -9,7 +9,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | F1 | PS | 6 | 6 | 0 |
 | F1 | RNF | 10 | 10 | 0 |
 | F1 | SEG | 11 | 11 | 0 |
-| F2 | RN | 34 | 24 | 10 |
+| F2 | RN | 34 | 27 | 7 |
 | F2 | RNF | 5 | 2 | 3 |
 | F2 | SEG | 1 | 0 | 1 |
 | F3 | PS | 8 | 0 | 8 |
@@ -151,9 +151,9 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RN-044 | F2 | Cubierto | tests/unit/domain/insights.test.ts |
 | RN-045 | F2 | Cubierto | tests/unit/domain/insights.test.ts |
 | RN-046 | F2 | Cubierto | tests/unit/domain/insights.test.ts |
-| RN-050 | F2 | Pendiente por fase | — |
-| RN-051 | F2 | Pendiente por fase | — |
-| RN-052 | F2 | Pendiente por fase | — |
+| RN-050 | F2 | Cubierto | tests/unit/domain/streaks.test.ts |
+| RN-051 | F2 | Cubierto | tests/unit/domain/streaks.test.ts |
+| RN-052 | F2 | Cubierto | tests/unit/domain/streaks.test.ts |
 | RN-060 | F2 | Pendiente por fase | — |
 | RN-061 | F2 | Pendiente por fase | — |
 | RN-062 | F5 | Pendiente por fase | — |

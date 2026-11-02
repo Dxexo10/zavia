@@ -1,7 +1,7 @@
 # Estado de implementación — Zavia
 - Fase actual: F2 en curso
-- Última tarea completada: F2-T08 Insights
-- Próxima tarea: F2-T09 Rachas y logros
+- Última tarea completada: F2-T09 Rachas y logros
+- Próxima tarea: F2-T10 CSV: parseo y duplicados
 - Fases cerradas: F1
 - F0: parcial. Listos Docker Desktop, Node, pnpm y Git. Pendientes del autor: proyectos Supabase de staging y producción (con correo/contraseña desactivado), Vercel, Turnstile, cliente OAuth de Google y `.env.local`; bloquean F3 y F5.
 - Bloqueos / decisiones pendientes del autor: ninguno.
