@@ -1,10 +1,10 @@
 # Estado de implementación — Zavia
-- Fase actual: F2 en curso
-- Última tarea completada: controles manuales de mutación F2
-- Próxima tarea: completar las pruebas y comportamientos obligatorios pendientes de F2
-- Fases cerradas: F1
+- Fase actual: F2 cerrada
+- Última tarea completada: puerta de control F2
+- Próxima tarea: F3-T01 (bloqueada por prerrequisitos de F0 a cargo del autor)
+- Fases cerradas: F1, F2
 - F0: parcial. Listos Docker Desktop, Node, pnpm y Git. Pendientes del autor: proyectos Supabase de staging y producción (con correo/contraseña desactivado), Vercel, Turnstile, cliente OAuth de Google y `.env.local`; bloquean F3 y F5.
-- Bloqueos / decisiones pendientes del autor: la puerta F2 no puede cerrarse todavía: faltan comportamientos verificables de las tablas 5.2, 5.6, 5.7, 5.8 y 5.9 del documento 10. F3 y F5 siguen bloqueadas por los prerrequisitos de F0 a cargo del autor.
+- Bloqueos / decisiones pendientes del autor: F3 y F5 siguen bloqueadas por los prerrequisitos de F0 a cargo del autor.
 - Nota F3-T08: comprobar si `supabase gen types` funciona con `pg_meta` excluido; si no, reactivarlo en `supabase/config.toml` antes de generar tipos.
 - Deuda con vencimiento: `[RNF-045][RNF-044]` es `it.todo` hasta F4-T04, que debe activar la prueba de paridad ES/EN y de `errors.<CODE>` antes de cerrar su puerta.
 - Deuda con vencimiento: F13-T04 debe reevaluar Stryker. El 2026-11-02, `@stryker-mutator/core` y `@stryker-mutator/vitest-runner` 10.0.0 (ambos con más de 14 días) declararon compatibilidad con Vitest >= 2, pero con Vitest 5.0.5 los mutantes no ejecutaron pruebas de forma fiable. Se aplicó mientras tanto el control manual de los mutantes críticos con `pnpm test:mutation-control`; no se añadieron versiones recientes ni se conectó Stryker a CI.
