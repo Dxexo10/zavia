@@ -210,7 +210,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-050 | F2 | Cubierto | tests/static/quality-config.test.mjs |
 | RNF-051 | F2 | Cubierto | tests/static/layer-rule.test.mjs |
 | RNF-052 | F1 | Cubierto | tests/static/quality-config.test.mjs |
-| RNF-053 | F1 | Cubierto | tests/static/ci-security.test.mjs<br>tests/static/quality-config.test.mjs |
+| RNF-053 | F1 | Cubierto | tests/static/ci-security.test.mjs<br>tests/static/commitlint-dependabot.test.mjs<br>tests/static/quality-config.test.mjs |
 | RNF-054 | F13 | Pendiente por fase | — |
 | RNF-055 | F1 | Cubierto | tests/unit/check-traceability.test.ts |
 | RNF-056 | F13 | Pendiente por fase | — |
@@ -314,7 +314,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | SEG-SEC-06 | F14 | Pendiente por fase | — |
 | SEG-SUP-01 | F1 | Cubierto | tests/static/ci-security.test.mjs |
 | SEG-SUP-02 | F1 | Cubierto | tests/static/f1-controls.test.mjs<br>tests/static/local-environment.test.mjs |
-| SEG-SUP-03 | F1 | Cubierto | tests/static/f1-controls.test.mjs |
+| SEG-SUP-03 | F1 | Cubierto | tests/static/commitlint-dependabot.test.mjs<br>tests/static/f1-controls.test.mjs |
 | SEG-SUP-04 | F13 | Pendiente por fase | — |
 | SEG-SUP-05 | F1 | Cubierto | tests/static/f1-controls.test.mjs |
 | SEG-SUP-06 | F1 | Cubierto | tests/static/ci-security.test.mjs |

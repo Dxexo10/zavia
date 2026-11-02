@@ -40,6 +40,9 @@ test("[SEG-SUP-03] Dependabot agrupa actualizaciones de dependencias y acciones"
   assert.match(dependabot, /package-ecosystem: npm/);
   assert.match(dependabot, /package-ecosystem: github-actions/);
   assert.match(dependabot, /groups:/);
+  assert.match(dependabot, /cooldown:\s*\n\s*default-days: 14/);
+  assert.match(dependabot, /dependency-name: typescript/);
+  assert.match(dependabot, /version-update:semver-major/);
 });
 
 test("[SEG-SUP-05] el gestor bloquea scripts de instalación por defecto", async () => {

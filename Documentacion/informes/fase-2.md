@@ -27,7 +27,7 @@ pnpm check:layers            0 violaciones
 pnpm detect:design           correcto (sin interfaz renderizada todavía)
 pnpm format:check            correcto
 pnpm build                   compilación de producción correcta
-pnpm audit --prod            sin vulnerabilidades conocidas
+pnpm audit --audit-level=high  sin vulnerabilidades altas o críticas conocidas
 gitleaks git                 38 commits escaneados; sin secretos
 ```
 
@@ -94,6 +94,8 @@ F2 cubre RN-001, RN-002, RN-003, RN-004, RN-005, RN-007, RN-010 a RN-014, RN-020
 ## 4. Desviaciones respecto a la documentación
 
 Stryker no produjo una línea base fiable con las versiones autorizadas. La documentación vigente del runner de Vitest indica que fuerza `perTest` e ignora `coverageAnalysis`; no se intentó una tercera combinación ni se actualizó a una versión con menos de 14 días. La compensación aceptada es el control manual de 14 mutantes críticos. F13-T04 deberá volver a evaluar la herramienta.
+
+Dependabot admite `cooldown.default-days` para npm y GitHub Actions; se fijó en 14 días. La documentación vigente aclara que el *cooldown* y `ignore.update-types` afectan actualizaciones de versión, no actualizaciones de seguridad: estas siguen pudiendo abrir Pull Requests inmediatamente. TypeScript queda excluido solo de `semver-major` hasta que typescript-eslint anuncie soporte.
 
 ## 5. Propuestas de cambio a los documentos
 
