@@ -110,4 +110,4 @@ No hubo interfaz en F2. El detector estático pasó; la auditoría de página qu
 
 ## 8. Decisiones que necesita el autor
 
-F2 está lista para Pull Request y no se fusionó. F3 permanece bloqueada hasta que el autor complete los prerrequisitos de F0 ya registrados en `estado.md`.
+La puerta local de F2 está verde y la rama está subida, pero la fase aún no se cierra: el autor debe abrir el Pull Request y confirmar su CI en verde. No se fusionó nada. F3 permanece bloqueada hasta que el autor complete los prerrequisitos de F0 ya registrados en `estado.md`.
