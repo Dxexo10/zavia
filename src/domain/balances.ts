@@ -37,6 +37,11 @@ export interface AccountBalance {
   projectedMinor: number;
 }
 
+export interface ImplicitExchangeRate {
+  numerator: number;
+  denominator: number;
+}
+
 export function createTransfer(input: TransferInput): Transfer {
   if (input.fromAccountId === input.toAccountId) {
     throw new RangeError("Las cuentas de una transferencia deben ser distintas.");
@@ -54,6 +59,14 @@ export function createTransfer(input: TransferInput): Transfer {
   parseCalendarDate(input.occurredOn);
 
   return { ...input };
+}
+
+export function implicitExchangeRate(transfer: Transfer): ImplicitExchangeRate {
+  const divisor = greatestCommonDivisor(transfer.amountIn.minor, transfer.amountOut.minor);
+  return {
+    numerator: transfer.amountIn.minor / divisor,
+    denominator: transfer.amountOut.minor / divisor
+  };
 }
 
 export function calculateAccountBalance(
@@ -132,4 +145,15 @@ function transferAmountForAccount(
   }
 
   return 0;
+}
+
+function greatestCommonDivisor(first: number, second: number): number {
+  let dividend = first;
+  let divisor = second;
+  while (divisor !== 0) {
+    const remainder = dividend % divisor;
+    dividend = divisor;
+    divisor = remainder;
+  }
+  return dividend;
 }

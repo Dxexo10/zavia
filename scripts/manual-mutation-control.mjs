@@ -8,6 +8,16 @@ const vitest = fileURLToPath(new URL("../node_modules/vitest/vitest.mjs", import
 
 const controls = [
   {
+    name: "tasa implícita usa monto de salida como numerador",
+    file: "src/domain/balances.ts",
+    replace: [
+      "numerator: transfer.amountIn.minor / divisor",
+      "numerator: transfer.amountOut.minor / divisor"
+    ],
+    test: "tests/unit/domain/balances.test.ts",
+    expected: "[RN-007] deriva la tasa implícita de los dos montos entre monedas distintas"
+  },
+  {
     name: "umbral verde >= por >",
     file: "src/domain/goals.ts",
     replace: ["ratio >= GOAL_GREEN_RATIO", "ratio > GOAL_GREEN_RATIO"],

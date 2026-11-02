@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import {
   calculateAccountBalance,
   createTransfer,
+  implicitExchangeRate,
   type AccountBalanceInput,
   type Transaction
 } from "../../../src/domain/balances";
@@ -69,6 +70,18 @@ describe("[RN-002] saldos", () => {
 });
 
 describe("[RN-007] transferencias", () => {
+  it("[RN-007] deriva la tasa implícita de los dos montos entre monedas distintas", () => {
+    const transfer = createTransfer({
+      fromAccountId: "pen",
+      toAccountId: "usd",
+      amountOut: createMoney(10_000, "PEN"),
+      amountIn: createMoney(2_500, "USD"),
+      occurredOn: "2026-10-29"
+    });
+
+    expect(implicitExchangeRate(transfer)).toEqual({ numerator: 1, denominator: 4 });
+  });
+
   it("[RN-007] aplica una transferencia misma moneda a origen y destino sin ingreso o gasto", () => {
     const transfer = createTransfer({
       fromAccountId: "account-a",
