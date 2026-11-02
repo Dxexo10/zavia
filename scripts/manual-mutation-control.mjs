@@ -43,6 +43,24 @@ const controls = [
     expected: "[RN-003] redondea half-up los ejemplos documentados"
   },
   {
+    name: "racha usa fecha de transacción en lugar de registro",
+    file: "src/domain/streaks.ts",
+    replace: [
+      ".map((activity) => activity.registeredOn)",
+      ".map((activity) => activity.occurredOn ?? activity.registeredOn)"
+    ],
+    test: "tests/unit/domain/streaks.test.ts",
+    expected:
+      "[RN-051][RN-052] usa la fecha de registro, cuenta un día una vez y mantiene vigente ayer"
+  },
+  {
+    name: "logro de presupuesto exige más de dos presupuestos",
+    file: "src/domain/streaks.ts",
+    replace: ["usages.length >= 2", "usages.length > 2"],
+    test: "tests/unit/domain/streaks.test.ts",
+    expected: "[RN-050][RN-052] evalúa todo el catálogo con umbrales exactos"
+  },
+  {
     name: "umbral ámbar 0.90 >= por >",
     file: "src/domain/goals.ts",
     replace: ["ratio >= GOAL_AMBER_RATIO", "ratio > GOAL_AMBER_RATIO"],
