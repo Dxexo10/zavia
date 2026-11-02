@@ -9,7 +9,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | F1 | PS | 6 | 6 | 0 |
 | F1 | RNF | 10 | 10 | 0 |
 | F1 | SEG | 11 | 11 | 0 |
-| F2 | RN | 34 | 30 | 4 |
+| F2 | RN | 34 | 31 | 3 |
 | F2 | RNF | 5 | 2 | 3 |
 | F2 | SEG | 1 | 1 | 0 |
 | F3 | PS | 8 | 0 | 8 |
@@ -155,7 +155,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RN-051 | F2 | Cubierto | tests/unit/domain/streaks.test.ts |
 | RN-052 | F2 | Cubierto | tests/unit/domain/streaks.test.ts |
 | RN-060 | F2 | Cubierto | tests/unit/domain/demo-name.test.ts |
-| RN-061 | F2 | Pendiente por fase | — |
+| RN-061 | F2 | Cubierto | tests/unit/domain/demo-data.test.ts |
 | RN-062 | F5 | Pendiente por fase | — |
 | RN-063 | F5 | Pendiente por fase | — |
 | RN-070 | F2 | Cubierto | tests/unit/domain/dates.test.ts |
@@ -214,7 +214,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-054 | F13 | Pendiente por fase | — |
 | RNF-055 | F1 | Cubierto | tests/unit/check-traceability.test.ts |
 | RNF-056 | F13 | Pendiente por fase | — |
-| RNF-057 | F1 | Cubierto | tests/unit/clock.test.ts<br>tests/static/foundation-contracts.test.mjs |
+| RNF-057 | F1 | Cubierto | tests/unit/clock.test.ts<br>tests/unit/domain/demo-data.test.ts<br>tests/static/foundation-contracts.test.mjs |
 | RNF-058 | F1 | Cubierto | tests/static/f1-controls.test.mjs |
 | RNF-059 | F5 | Pendiente por fase | — |
 | RNF-060 | F13 | Pendiente por fase | — |
