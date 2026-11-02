@@ -9,8 +9,8 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | F1 | PS | 6 | 6 | 0 |
 | F1 | RNF | 10 | 10 | 0 |
 | F1 | SEG | 11 | 11 | 0 |
-| F2 | RN | 34 | 0 | 34 |
-| F2 | RNF | 5 | 0 | 5 |
+| F2 | RN | 34 | 3 | 31 |
+| F2 | RNF | 5 | 1 | 4 |
 | F2 | SEG | 1 | 0 | 1 |
 | F3 | PS | 8 | 0 | 8 |
 | F3 | RN | 3 | 0 | 3 |
@@ -120,9 +120,9 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RF-039 | F4 | Pendiente por fase | — |
 | RF-040 | F6 | Pendiente por fase | — |
 | RF-041 | F12 | Pendiente por fase | — |
-| RN-001 | F2 | Pendiente por fase | — |
+| RN-001 | F2 | Cubierto | tests/unit/domain/money.test.ts |
 | RN-002 | F2 | Pendiente por fase | — |
-| RN-003 | F2 | Pendiente por fase | — |
+| RN-003 | F2 | Cubierto | tests/unit/domain/money.test.ts |
 | RN-004 | F2 | Pendiente por fase | — |
 | RN-005 | F2 | Pendiente por fase | — |
 | RN-006 | F3 | Pendiente por fase | — |
@@ -141,7 +141,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RN-024 | F2 | Pendiente por fase | — |
 | RN-025 | F2 | Pendiente por fase | — |
 | RN-026 | F2 | Pendiente por fase | — |
-| RN-027 | F2 | Pendiente por fase | — |
+| RN-027 | F2 | Cubierto | tests/unit/domain/money.test.ts |
 | RN-030 | F2 | Pendiente por fase | — |
 | RN-031 | F2 | Pendiente por fase | — |
 | RN-040 | F2 | Pendiente por fase | — |
@@ -172,7 +172,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-010 | F10 | Pendiente por fase | — |
 | RNF-011 | F6 | Pendiente por fase | — |
 | RNF-012 | F14 | Pendiente por fase | — |
-| RNF-013 | F2 | Pendiente por fase | — |
+| RNF-013 | F2 | Cubierto | tests/unit/domain/money.test.ts |
 | RNF-014 | F2 | Pendiente por fase | — |
 | RNF-015 | F5 | Pendiente por fase | — |
 | RNF-016 | F3 | Pendiente por fase | — |

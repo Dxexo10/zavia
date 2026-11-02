@@ -1,10 +1,10 @@
 # Estado de implementación — Zavia
-- Fase actual: F1 cerrada (corrección de trazabilidad pendiente de CI)
-- Última tarea completada: corrección de F1-T02 para hooks Husky portables (pendiente de CI)
-- Próxima tarea: F2-T01 (no iniciar hasta `CONTINUAR` del autor)
+- Fase actual: F2 en curso
+- Última tarea completada: F2-T01 Dinero y moneda
+- Próxima tarea: F2-T02 Fechas y zona horaria
 - Fases cerradas: F1
 - F0: parcial. Listos Docker Desktop, Node, pnpm y Git. Pendientes del autor: proyectos Supabase de staging y producción (con correo/contraseña desactivado), Vercel, Turnstile, cliente OAuth de Google y `.env.local`; bloquean F3 y F5.
-- Bloqueos / decisiones pendientes del autor: ninguno. La corrección está pendiente de la confirmación del CI del Pull Request.
+- Bloqueos / decisiones pendientes del autor: ninguno.
 - Nota F3-T08: comprobar si `supabase gen types` funciona con `pg_meta` excluido; si no, reactivarlo en `supabase/config.toml` antes de generar tipos.
 - Deuda con vencimiento: `[RNF-045][RNF-044]` es `it.todo` hasta F4-T04, que debe activar la prueba de paridad ES/EN y de `errors.<CODE>` antes de cerrar su puerta.
 - Propuestas de cambio a la documentación (sin aplicar): Ninguna pendiente; 11 v0.4 ya añadió 03/06/09 a F1.
