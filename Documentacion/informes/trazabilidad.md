@@ -9,7 +9,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | F1 | PS | 6 | 6 | 0 |
 | F1 | RNF | 10 | 10 | 0 |
 | F1 | SEG | 11 | 11 | 0 |
-| F2 | RN | 34 | 13 | 21 |
+| F2 | RN | 34 | 15 | 19 |
 | F2 | RNF | 5 | 2 | 3 |
 | F2 | SEG | 1 | 0 | 1 |
 | F3 | PS | 8 | 0 | 8 |
@@ -139,8 +139,8 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RN-022 | F2 | Pendiente por fase | — |
 | RN-023 | F2 | Pendiente por fase | — |
 | RN-024 | F2 | Cubierto | tests/unit/domain/goals.test.ts |
-| RN-025 | F2 | Pendiente por fase | — |
-| RN-026 | F2 | Pendiente por fase | — |
+| RN-025 | F2 | Cubierto | tests/unit/domain/budgets.test.ts |
+| RN-026 | F2 | Cubierto | tests/unit/domain/budgets.test.ts |
 | RN-027 | F2 | Cubierto | tests/unit/domain/money.test.ts |
 | RN-030 | F2 | Pendiente por fase | — |
 | RN-031 | F2 | Pendiente por fase | — |
