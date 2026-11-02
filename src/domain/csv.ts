@@ -5,6 +5,48 @@ export interface CsvRowIdentity {
   description: string;
 }
 
+export interface CsvRawRow {
+  occurredOn: string;
+  amount: string;
+  description: string;
+}
+
+export type CsvBatchResult =
+  | {
+      status: "valid" | "possible_duplicate";
+      row: Omit<CsvRowIdentity, "accountId">;
+    }
+  | { status: "invalid"; reason: "invalid_date" | "invalid_amount" };
+
+export function parseCsvBatch(
+  accountId: string,
+  rows: readonly CsvRawRow[],
+  existingRows: readonly CsvRowIdentity[]
+): CsvBatchResult[] {
+  const knownRows = [...existingRows];
+  return rows.map((raw) => {
+    let occurredOn: string;
+    try {
+      occurredOn = parseCsvDate(raw.occurredOn);
+    } catch {
+      return { status: "invalid", reason: "invalid_date" };
+    }
+    let amountMinor: number;
+    try {
+      amountMinor = parseCsvAmount(raw.amount);
+    } catch {
+      return { status: "invalid", reason: "invalid_amount" };
+    }
+    const identity = { accountId, occurredOn, amountMinor, description: raw.description };
+    const row = { occurredOn, amountMinor, description: raw.description };
+    if (knownRows.some((known) => isDuplicateCsvRow(known, identity))) {
+      return { status: "possible_duplicate", row };
+    }
+    knownRows.push(identity);
+    return { status: "valid", row };
+  });
+}
+
 export function parseCsvDate(value: string): string {
   const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
   const local = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value);

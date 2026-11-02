@@ -61,6 +61,23 @@ const controls = [
     expected: "[RN-050][RN-052] evalúa todo el catálogo con umbrales exactos"
   },
   {
+    name: "fila CSV inválida aborta el lote",
+    file: "src/domain/csv.ts",
+    replace: [
+      'return { status: "invalid", reason: "invalid_date" };',
+      'throw new TypeError("Fecha CSV inválida.");'
+    ],
+    test: "tests/unit/domain/csv.test.ts",
+    expected: "[RN-014][RN-012] clasifica cada fila y una inválida no bloquea las válidas"
+  },
+  {
+    name: "lote CSV no marca duplicados posibles",
+    file: "src/domain/csv.ts",
+    replace: ["knownRows.some((known) => isDuplicateCsvRow(known, identity))", "false"],
+    test: "tests/unit/domain/csv.test.ts",
+    expected: "[RN-014][RN-012] clasifica cada fila y una inválida no bloquea las válidas"
+  },
+  {
     name: "umbral ámbar 0.90 >= por >",
     file: "src/domain/goals.ts",
     replace: ["ratio >= GOAL_AMBER_RATIO", "ratio > GOAL_AMBER_RATIO"],
@@ -117,7 +134,17 @@ function runVitest(test) {
   });
 }
 
-for (const control of controls) {
+const selectedControls = process.argv.slice(2);
+const controlsToRun =
+  selectedControls.length === 0
+    ? controls
+    : controls.filter((control) =>
+        selectedControls.some((selected) => control.name.includes(selected))
+      );
+
+assert.ok(controlsToRun.length > 0, "No hay controles de mutación seleccionados.");
+
+async function runControl(control) {
   const path = new URL(`../${control.file}`, import.meta.url);
   const source = await readFile(path, "utf8");
   assert.ok(
@@ -138,3 +165,10 @@ for (const control of controls) {
     await writeFile(path, source);
   }
 }
+
+const controlsByFile = Map.groupBy(controlsToRun, (control) => control.file);
+await Promise.all(
+  [...controlsByFile.values()].map(async (controlsForFile) => {
+    for (const control of controlsForFile) await runControl(control);
+  })
+);
