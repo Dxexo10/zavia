@@ -23,6 +23,11 @@ describe("[RN-001][RN-003] dinero y redondeo", () => {
     expect(roundHalfUp("2.5", 0)).toBe("3");
   });
 
+  it("[RN-003] rechaza precisión o representación decimal inválida", () => {
+    expect(() => roundHalfUp("1", -1)).toThrow("entero no negativo");
+    expect(() => roundHalfUp("1e-3", 2)).toThrow("representación decimal");
+  });
+
   it("[RN-001][RNF-013] suma céntimos sin error de coma flotante", () => {
     expect(addMoney(createMoney(10, "PEN"), createMoney(20, "PEN"))).toEqual(
       createMoney(30, "PEN")

@@ -5,4 +5,5 @@ PROMPT_MAESTRO.md
 node_modules/
 .next/
 coverage/
+reports/
 playwright-report/

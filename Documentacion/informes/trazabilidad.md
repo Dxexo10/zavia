@@ -9,8 +9,8 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | F1 | PS | 6 | 6 | 0 |
 | F1 | RNF | 10 | 10 | 0 |
 | F1 | SEG | 11 | 11 | 0 |
-| F2 | RN | 34 | 32 | 2 |
-| F2 | RNF | 5 | 2 | 3 |
+| F2 | RN | 34 | 34 | 0 |
+| F2 | RNF | 5 | 5 | 0 |
 | F2 | SEG | 1 | 1 | 0 |
 | F3 | PS | 8 | 0 | 8 |
 | F3 | RN | 3 | 0 | 3 |
@@ -136,8 +136,8 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RN-014 | F2 | Cubierto | tests/unit/domain/csv.test.ts |
 | RN-020 | F2 | Cubierto | tests/unit/domain/goals.test.ts |
 | RN-021 | F2 | Cubierto | tests/unit/domain/goals.test.ts |
-| RN-022 | F2 | Pendiente por fase | — |
-| RN-023 | F2 | Pendiente por fase | — |
+| RN-022 | F2 | Cubierto | tests/unit/domain/goals.test.ts |
+| RN-023 | F2 | Cubierto | tests/unit/domain/goals.test.ts |
 | RN-024 | F2 | Cubierto | tests/unit/domain/goals.test.ts |
 | RN-025 | F2 | Cubierto | tests/unit/domain/budgets.test.ts |
 | RN-026 | F2 | Cubierto | tests/unit/domain/budgets.test.ts |
@@ -189,7 +189,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-029 | F5 | Pendiente por fase | — |
 | RNF-030 | F5 | Pendiente por fase | — |
 | RNF-031 | F5 | Pendiente por fase | — |
-| RNF-032 | F2 | Pendiente por fase | — |
+| RNF-032 | F2 | Cubierto | tests/unit/domain/demo-data.test.ts |
 | RNF-033 | F4 | Pendiente por fase | — |
 | RNF-034 | F4 | Pendiente por fase | — |
 | RNF-035 | F4 | Pendiente por fase | — |
@@ -207,8 +207,8 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-047 | F4 | Pendiente por fase | — |
 | RNF-048 | F1 | Cubierto | tests/unit/smoke.test.mjs |
 | RNF-049 | F1 | Cubierto | tests/static/quality-config.test.mjs |
-| RNF-050 | F2 | Pendiente por fase | — |
-| RNF-051 | F2 | Pendiente por fase | — |
+| RNF-050 | F2 | Cubierto | tests/static/quality-config.test.mjs |
+| RNF-051 | F2 | Cubierto | tests/static/layer-rule.test.mjs |
 | RNF-052 | F1 | Cubierto | tests/static/quality-config.test.mjs |
 | RNF-053 | F1 | Cubierto | tests/static/ci-security.test.mjs<br>tests/static/quality-config.test.mjs |
 | RNF-054 | F13 | Pendiente por fase | — |

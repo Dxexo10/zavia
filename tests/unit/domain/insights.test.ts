@@ -63,6 +63,14 @@ describe("[RN-042][RN-044] insights de presupuesto y metas", () => {
       budgetRiskInsight({
         elapsedDays: 10,
         daysInMonth: 30,
+        spentMinor: 10_000,
+        limitMinor: 50_000
+      })
+    ).toBeNull();
+    expect(
+      budgetRiskInsight({
+        elapsedDays: 10,
+        daysInMonth: 30,
         spentMinor: 51_000,
         limitMinor: 50_000
       })

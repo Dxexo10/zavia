@@ -1,10 +1,10 @@
 # Estado de implementación — Zavia
 - Fase actual: F2 en curso
-- Última tarea completada: F2-T13 Esquemas Zod compartidos
-- Próxima tarea: puerta de control F2
+- Última tarea completada: correcciones de cobertura F2 y configuración local de mutación
+- Próxima tarea: puerta de control F2 (bloqueada)
 - Fases cerradas: F1
 - F0: parcial. Listos Docker Desktop, Node, pnpm y Git. Pendientes del autor: proyectos Supabase de staging y producción (con correo/contraseña desactivado), Vercel, Turnstile, cliente OAuth de Google y `.env.local`; bloquean F3 y F5.
-- Bloqueos / decisiones pendientes del autor: ninguno.
+- Bloqueos / decisiones pendientes del autor: Docker Desktop no está disponible (falla la prueba de Gitleaks y por tanto la cobertura completa); Stryker 10.0.0 con Vitest completó su ejecución inicial pero terminó sin reporte de mutación. No cerrar F2 hasta resolver ambos.
 - Nota F3-T08: comprobar si `supabase gen types` funciona con `pg_meta` excluido; si no, reactivarlo en `supabase/config.toml` antes de generar tipos.
 - Deuda con vencimiento: `[RNF-045][RNF-044]` es `it.todo` hasta F4-T04, que debe activar la prueba de paridad ES/EN y de `errors.<CODE>` antes de cerrar su puerta.
 - Propuestas de cambio a la documentación (sin aplicar): Ninguna pendiente; 11 v0.4 ya añadió 03/06/09 a F1.

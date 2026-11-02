@@ -11,6 +11,7 @@ describe("[RN-025] presupuestos versionados", () => {
 
     expect(budgetForMonth(versions, "2026-02")).toBe(50_000);
     expect(budgetForMonth(versions, "2026-03")).toBe(70_000);
+    expect(budgetForMonth(versions, "2025-12")).toBeNull();
   });
 
   it("[RN-025] no cuenta transferencias ni movimientos eliminados", () => {
@@ -42,5 +43,9 @@ describe("[RN-026] umbrales de presupuesto", () => {
     [50_001, "red", 1]
   ])("[RN-026] clasifica gasto %i", (spentMinor, level, exceededMinor) => {
     expect(calculateBudgetStatus(50_000, spentMinor)).toMatchObject({ level, exceededMinor });
+  });
+
+  it("[RN-026] rechaza un límite no positivo", () => {
+    expect(() => calculateBudgetStatus(0, 0)).toThrow("positivo");
   });
 });

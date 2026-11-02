@@ -20,11 +20,13 @@ export interface GoalInput {
 }
 export interface GoalProjection {
   remainingMinor: number;
+  windowDays: number | null;
   monthlyPaceMinor: number | null;
   daysToComplete: number | null;
   requiredMonthlyMinor: number | null;
   projectedDate: string | null;
   ratio: number | null;
+  delayDays: number | null;
   state:
     | "on_track"
     | "at_risk"
@@ -56,8 +58,10 @@ export function projectGoal(goal: GoalInput, today: string): GoalProjection {
     );
   const monthlyPaceMinor = Math.round((net * COMMERCIAL_MONTH_DAYS) / windowDays);
   const daysRemaining = daysBetween(today, goal.deadline);
-  if (daysRemaining <= 0) return special(remainingMinor, "overdue", "red", monthlyPaceMinor);
-  if (monthlyPaceMinor <= 0) return special(remainingMinor, "no_progress", "red", monthlyPaceMinor);
+  if (daysRemaining <= 0)
+    return special(remainingMinor, "overdue", "red", monthlyPaceMinor, windowDays);
+  if (monthlyPaceMinor <= 0)
+    return special(remainingMinor, "no_progress", "red", monthlyPaceMinor, windowDays);
   const daysToComplete = Math.ceil((remainingMinor * COMMERCIAL_MONTH_DAYS) / monthlyPaceMinor);
   const requiredMonthlyMinor = Math.round((remainingMinor * COMMERCIAL_MONTH_DAYS) / daysRemaining);
   const ratio = Math.round((monthlyPaceMinor * 10_000) / requiredMonthlyMinor) / 10_000;
@@ -66,29 +70,42 @@ export function projectGoal(goal: GoalInput, today: string): GoalProjection {
   const light = state === "on_track" ? "green" : state === "at_risk" ? "amber" : "red";
   return {
     remainingMinor,
+    windowDays,
     monthlyPaceMinor,
     daysToComplete,
     requiredMonthlyMinor,
     projectedDate: addDays(today, daysToComplete),
     ratio,
+    delayDays: daysToComplete - daysRemaining,
     state,
     light
   };
+}
+
+export function canWithdrawGoal(savedMinor: number, withdrawalMinor: number): boolean {
+  return withdrawalMinor > 0 && withdrawalMinor <= savedMinor;
+}
+
+export function canChangeGoalCurrency(entryCount: number): boolean {
+  return entryCount === 0;
 }
 
 function special(
   remainingMinor: number,
   state: GoalProjection["state"],
   light: GoalProjection["light"],
-  monthlyPaceMinor: number | null = null
+  monthlyPaceMinor: number | null = null,
+  windowDays: number | null = null
 ): GoalProjection {
   return {
     remainingMinor,
+    windowDays,
     monthlyPaceMinor,
     daysToComplete: null,
     requiredMonthlyMinor: null,
     projectedDate: null,
     ratio: null,
+    delayDays: null,
     state,
     light
   };
