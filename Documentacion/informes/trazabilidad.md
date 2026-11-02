@@ -9,9 +9,9 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | F1 | PS | 6 | 6 | 0 |
 | F1 | RNF | 10 | 10 | 0 |
 | F1 | SEG | 11 | 11 | 0 |
-| F2 | RN | 34 | 29 | 5 |
+| F2 | RN | 34 | 30 | 4 |
 | F2 | RNF | 5 | 2 | 3 |
-| F2 | SEG | 1 | 0 | 1 |
+| F2 | SEG | 1 | 1 | 0 |
 | F3 | PS | 8 | 0 | 8 |
 | F3 | RN | 3 | 0 | 3 |
 | F3 | RNF | 10 | 0 | 10 |
@@ -154,7 +154,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RN-050 | F2 | Cubierto | tests/unit/domain/streaks.test.ts |
 | RN-051 | F2 | Cubierto | tests/unit/domain/streaks.test.ts |
 | RN-052 | F2 | Cubierto | tests/unit/domain/streaks.test.ts |
-| RN-060 | F2 | Pendiente por fase | — |
+| RN-060 | F2 | Cubierto | tests/unit/domain/demo-name.test.ts |
 | RN-061 | F2 | Pendiente por fase | — |
 | RN-062 | F5 | Pendiente por fase | — |
 | RN-063 | F5 | Pendiente por fase | — |
@@ -287,7 +287,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | SEG-INF-08 | F14 | Pendiente por fase | — |
 | SEG-INP-01 | F5 | Pendiente por fase | — |
 | SEG-INP-02 | F1 | Cubierto | tests/static/f1-controls.test.mjs |
-| SEG-INP-03 | F2 | Pendiente por fase | — |
+| SEG-INP-03 | F2 | Cubierto | tests/unit/domain/demo-name.test.ts |
 | SEG-INP-04 | F5 | Pendiente por fase | — |
 | SEG-INP-05 | F3 | Pendiente por fase | — |
 | SEG-INP-06 | F3 | Pendiente por fase | — |
