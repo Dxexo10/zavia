@@ -9,7 +9,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | F1 | PS | 6 | 6 | 0 |
 | F1 | RNF | 10 | 10 | 0 |
 | F1 | SEG | 11 | 11 | 0 |
-| F2 | RN | 34 | 5 | 29 |
+| F2 | RN | 34 | 7 | 27 |
 | F2 | RNF | 5 | 2 | 3 |
 | F2 | SEG | 1 | 0 | 1 |
 | F3 | PS | 8 | 0 | 8 |
@@ -27,7 +27,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | F5 | SEG | 34 | 1 | 33 |
 | F6 | PS | 3 | 0 | 3 |
 | F6 | RF | 7 | 0 | 7 |
-| F6 | RNF | 1 | 0 | 1 |
+| F6 | RNF | 1 | 1 | 0 |
 | F6 | SEG | 2 | 0 | 2 |
 | F7 | RF | 4 | 0 | 4 |
 | F7 | RNF | 4 | 0 | 4 |
@@ -121,12 +121,12 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RF-040 | F6 | Pendiente por fase | — |
 | RF-041 | F12 | Pendiente por fase | — |
 | RN-001 | F2 | Cubierto | tests/unit/domain/money.test.ts |
-| RN-002 | F2 | Pendiente por fase | — |
+| RN-002 | F2 | Cubierto | tests/unit/domain/balances.test.ts |
 | RN-003 | F2 | Cubierto | tests/unit/domain/money.test.ts |
 | RN-004 | F2 | Cubierto | tests/unit/domain/dates.test.ts |
 | RN-005 | F2 | Pendiente por fase | — |
 | RN-006 | F3 | Pendiente por fase | — |
-| RN-007 | F2 | Pendiente por fase | — |
+| RN-007 | F2 | Cubierto | tests/unit/domain/balances.test.ts |
 | RN-008 | F3 | Pendiente por fase | — |
 | RN-009 | F3 | Pendiente por fase | — |
 | RN-010 | F2 | Pendiente por fase | — |
@@ -170,7 +170,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-008 | F14 | Pendiente por fase | — |
 | RNF-009 | F14 | Pendiente por fase | — |
 | RNF-010 | F10 | Pendiente por fase | — |
-| RNF-011 | F6 | Pendiente por fase | — |
+| RNF-011 | F6 | Cubierto | tests/unit/domain/balances.test.ts |
 | RNF-012 | F14 | Pendiente por fase | — |
 | RNF-013 | F2 | Cubierto | tests/unit/domain/money.test.ts |
 | RNF-014 | F2 | Cubierto | tests/unit/domain/dates.test.ts |
