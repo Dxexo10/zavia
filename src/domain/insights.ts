@@ -18,6 +18,38 @@ export interface Insight {
   ruleKey: string;
 }
 
+export interface InsightRecord extends Insight {
+  entityKey: string;
+  period: string;
+  dismissed?: boolean;
+}
+
+export function deduplicateInsights(
+  candidates: readonly InsightRecord[],
+  current: readonly InsightRecord[]
+): InsightRecord[] {
+  const highestByKey = candidates.reduce((unique, candidate) => {
+    const key = insightKey(candidate);
+    const previous = unique.get(key);
+    if (
+      previous === undefined ||
+      severityRank(candidate.severity) > severityRank(previous.severity)
+    ) {
+      unique.set(key, candidate);
+    }
+    return unique;
+  }, new Map<string, InsightRecord>());
+
+  return [...highestByKey.values()].filter((candidate) => {
+    const existing = current.find((insight) => insightKey(insight) === insightKey(candidate));
+    return (
+      existing === undefined ||
+      (existing.dismissed === true &&
+        severityRank(candidate.severity) > severityRank(existing.severity))
+    );
+  });
+}
+
 export function categorySpendInsight(input: {
   historyMonths: number;
   averageMinor: number;
@@ -92,4 +124,12 @@ export function goalAdjustmentInsight(
     severity: state === "at_risk" ? "attention" : "alert",
     adjustmentMinor: requiredMonthlyMinor - monthlyPaceMinor
   };
+}
+
+function insightKey(insight: InsightRecord): string {
+  return `${insight.ruleKey}:${insight.entityKey}:${insight.period}`;
+}
+
+function severityRank(severity: InsightSeverity): number {
+  return { info: 0, attention: 1, alert: 2 }[severity];
 }

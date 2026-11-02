@@ -25,6 +25,17 @@ const controls = [
     expected: "[RN-020][RN-021] ritmo 56250 céntimos/mes"
   },
   {
+    name: "insight descartado reaparece sin aumentar gravedad",
+    file: "src/domain/insights.ts",
+    replace: [
+      "severityRank(candidate.severity) > severityRank(existing.severity)",
+      "severityRank(candidate.severity) >= severityRank(existing.severity)"
+    ],
+    test: "tests/unit/domain/insights.test.ts",
+    expected:
+      "[RN-040] deduplica por regla, entidad y periodo, y un descartado solo reaparece si sube"
+  },
+  {
     name: "redondeo half-up >= por >",
     file: "src/domain/money.ts",
     replace: ["remainder * 2n >= denominator", "remainder * 2n > denominator"],

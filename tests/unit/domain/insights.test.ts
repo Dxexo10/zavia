@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   budgetRiskInsight,
   categorySpendInsight,
+  deduplicateInsights,
   goalAdjustmentInsight,
   microExpensesInsight,
   savingsRateInsight,
@@ -10,6 +11,54 @@ import {
 } from "../../../src/domain/insights";
 
 describe("[RN-040][RN-041] categoría sobre promedio", () => {
+  it("[RN-040] deduplica por regla, entidad y periodo, y un descartado solo reaparece si sube", () => {
+    expect(
+      deduplicateInsights(
+        [
+          { ruleKey: "category_spend", entityKey: "food", period: "2026-10", severity: "alert" },
+          {
+            ruleKey: "category_spend",
+            entityKey: "food",
+            period: "2026-10",
+            severity: "attention"
+          },
+          {
+            ruleKey: "heavy_subscriptions",
+            entityKey: "all",
+            period: "2026-10",
+            severity: "attention"
+          },
+          { ruleKey: "budget_risk", entityKey: "food", period: "2026-10", severity: "attention" }
+        ],
+        [
+          {
+            ruleKey: "category_spend",
+            entityKey: "food",
+            period: "2026-10",
+            severity: "attention",
+            dismissed: true
+          },
+          {
+            ruleKey: "budget_risk",
+            entityKey: "food",
+            period: "2026-10",
+            severity: "attention",
+            dismissed: false
+          },
+          {
+            ruleKey: "heavy_subscriptions",
+            entityKey: "all",
+            period: "2026-10",
+            severity: "attention",
+            dismissed: true
+          }
+        ]
+      )
+    ).toEqual([
+      { ruleKey: "category_spend", entityKey: "food", period: "2026-10", severity: "alert" }
+    ]);
+  });
+
   it.each([
     [24900, null],
     [26000, "attention"],
