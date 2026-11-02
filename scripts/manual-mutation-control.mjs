@@ -65,6 +65,13 @@ const controls = [
     replace: ["Math.min(dayOf(anchor), daysInMonth(year, month))", "dayOf(anchor)"],
     test: "tests/unit/domain/recurring.test.ts",
     expected: "[RN-030] conserva el día 31 usando el último día de meses cortos"
+  },
+  {
+    name: "reanudación vuelve a generar ocurrencias previas a la pausa",
+    file: "src/domain/recurring.ts",
+    replace: ["rule.resumedOn ?? rule.startOn", "rule.startOn"],
+    test: "tests/unit/domain/recurring.test.ts",
+    expected: "[RN-030] al reanudar calcula la próxima fecha sin crear ocurrencias retroactivas"
   }
 ];
 

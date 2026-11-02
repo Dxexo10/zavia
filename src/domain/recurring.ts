@@ -11,6 +11,7 @@ export interface RecurrenceRule {
   frequency: RecurrenceFrequency;
   startOn: string;
   endOn?: string;
+  resumedOn?: string;
   status: "active" | "paused" | "cancelled";
 }
 
@@ -22,7 +23,7 @@ export function occurrencesDue(
   if (rule.status !== "active") return [];
 
   const occurrences: string[] = [];
-  let occurrence = rule.startOn;
+  let occurrence = firstOccurrenceOnOrAfter(rule, rule.resumedOn ?? rule.startOn);
   while (occurrence <= today && (!rule.endOn || occurrence <= rule.endOn)) {
     if (!existingOccurrenceDates.includes(occurrence)) occurrences.push(occurrence);
     if (occurrences.length === MAX_RECURRENCES_PER_RUN) return occurrences;
@@ -50,6 +51,12 @@ function nextOccurrence(rule: RecurrenceRule, occurrence: string): string {
   const nextMonth = monthOf(occurrence) === 12 ? 1 : monthOf(occurrence) + 1;
   const nextYear = monthOf(occurrence) === 12 ? yearOf(occurrence) + 1 : yearOf(occurrence);
   return anchoredDate(rule.startOn, nextYear, nextMonth);
+}
+
+function firstOccurrenceOnOrAfter(rule: RecurrenceRule, date: string): string {
+  let occurrence = rule.startOn;
+  while (occurrence < date) occurrence = nextOccurrence(rule, occurrence);
+  return occurrence;
 }
 
 function anchoredDate(anchor: string, year: number, month: number): string {

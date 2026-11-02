@@ -23,6 +23,22 @@ describe("[RN-030] recurrencias", () => {
     ).toHaveLength(24);
   });
 
+  it("[RN-030] al reanudar calcula la próxima fecha sin crear ocurrencias retroactivas", () => {
+    expect(
+      occurrencesDue(
+        {
+          id: "resumed",
+          frequency: "monthly",
+          startOn: "2026-01-31",
+          resumedOn: "2026-04-15",
+          status: "active"
+        },
+        "2026-05-01",
+        []
+      )
+    ).toEqual(["2026-04-30"]);
+  });
+
   it("[RN-030] respeta pausas, cancelaciones, fecha de fin y años no bisiestos", () => {
     expect(
       occurrencesDue(
