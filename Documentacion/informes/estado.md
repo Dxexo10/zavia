@@ -1,10 +1,10 @@
 # Estado de implementación — Zavia
-- Fase actual: F2 pendiente de CI en Pull Request
-- Última tarea completada: puerta local de control F2
-- Próxima tarea: abrir Pull Request de F2 y esperar CI verde del autor
-- Fases cerradas: F1
-- F0: parcial. Listos Docker Desktop, Node, pnpm y Git. Pendientes del autor: proyectos Supabase de staging y producción (con correo/contraseña desactivado), Vercel, Turnstile, cliente OAuth de Google y `.env.local`; bloquean F3 y F5.
-- Bloqueos / decisiones pendientes del autor: abrir el Pull Request de F2 y confirmar su CI en verde. F3 y F5 siguen bloqueadas por los prerrequisitos de F0 a cargo del autor.
+- Fase actual: F3 planificada
+- Última tarea completada: F2 cerrada (Pull Request fusionado con 7 checks en verde)
+- Próxima tarea: revisar y aprobar el plan de F3; después, F3-T01
+- Fases cerradas: F1, F2
+- F0: parcial. Listos Docker Desktop, Node, pnpm y Git. Pendientes del autor: proyectos Supabase de staging y producción (con correo/contraseña desactivado), Vercel, Turnstile, cliente OAuth de Google y `.env.local`. Supabase en la nube y Vercel se necesitan desde F14; el cliente OAuth de Google y Turnstile con claves reales desde F5 (prueba manual) y F14; `.env.local` desde F5. F3 y F5 se desarrollan y prueban con Supabase local.
+- Bloqueos / decisiones pendientes del autor: ninguno para planificar ni desarrollar F3 con Supabase local. Antes de las pruebas manuales de F5 se necesitarán `.env.local`, cliente OAuth de Google y Turnstile; antes de F14, Supabase en la nube y Vercel.
 - Nota F3-T08: comprobar si `supabase gen types` funciona con `pg_meta` excluido; si no, reactivarlo en `supabase/config.toml` antes de generar tipos.
 - Deuda con vencimiento: `[RNF-045][RNF-044]` es `it.todo` hasta F4-T04, que debe activar la prueba de paridad ES/EN y de `errors.<CODE>` antes de cerrar su puerta.
 - Deuda con vencimiento: F13-T04 debe reevaluar Stryker. El 2026-11-02, `@stryker-mutator/core` y `@stryker-mutator/vitest-runner` 10.0.0 (ambos con más de 14 días) declararon compatibilidad con Vitest >= 2, pero con Vitest 5.0.5 los mutantes no ejecutaron pruebas de forma fiable. Se aplicó mientras tanto el control manual de los mutantes críticos con `pnpm test:mutation-control`; no se añadieron versiones recientes ni se conectó Stryker a CI.
