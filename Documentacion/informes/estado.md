@@ -1,7 +1,7 @@
 # Estado de implementación — Zavia
-- Fase actual: F3 planificada
-- Última tarea completada: F2 cerrada (Pull Request fusionado con 7 checks en verde)
-- Próxima tarea: revisar y aprobar el plan de F3; después, F3-T01
+- Fase actual: F3 en curso
+- Última tarea completada: F3-T01 (migración inicial del esquema)
+- Próxima tarea: F3-T02 (RLS y permisos por tabla/columna)
 - Fases cerradas: F1, F2
 - F0: parcial. Listos Docker Desktop, Node, pnpm y Git. Pendientes del autor: proyectos Supabase de staging y producción (con correo/contraseña desactivado), Vercel, Turnstile, cliente OAuth de Google y `.env.local`. Supabase en la nube y Vercel se necesitan desde F14; el cliente OAuth de Google y Turnstile con claves reales desde F5 (prueba manual) y F14; `.env.local` desde F5. F3 y F5 se desarrollan y prueban con Supabase local.
 - Bloqueos / decisiones pendientes del autor: ninguno para planificar ni desarrollar F3 con Supabase local. Antes de las pruebas manuales de F5 se necesitarán `.env.local`, cliente OAuth de Google y Turnstile; antes de F14, Supabase en la nube y Vercel.
