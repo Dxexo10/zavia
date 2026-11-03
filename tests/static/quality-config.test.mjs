@@ -30,3 +30,10 @@ test("[RNF-053] hooks POSIX invocan los binarios locales sin depender de pnpm", 
   assert.match(preCommit, /node_modules\/.bin\/lint-staged/);
   assert.match(commitMsg, /node_modules\/.bin\/commitlint/);
 });
+
+test("[RNF-050] Vitest exige cobertura mínima para domain y application", async () => {
+  const vitest = await readFile(new URL("../../vitest.config.mts", import.meta.url), "utf8");
+
+  assert.match(vitest, /"src\/domain\/\*\*": \{ branches: 80, lines: 80 \}/);
+  assert.match(vitest, /"src\/application\/\*\*": \{ branches: 80, lines: 80 \}/);
+});

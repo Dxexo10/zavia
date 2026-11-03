@@ -1,0 +1,174 @@
+import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
+import { readFile, writeFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+
+const root = fileURLToPath(new URL("..", import.meta.url));
+const vitest = fileURLToPath(new URL("../node_modules/vitest/vitest.mjs", import.meta.url));
+
+const controls = [
+  {
+    name: "tasa implícita usa monto de salida como numerador",
+    file: "src/domain/balances.ts",
+    replace: [
+      "numerator: transfer.amountIn.minor / divisor",
+      "numerator: transfer.amountOut.minor / divisor"
+    ],
+    test: "tests/unit/domain/balances.test.ts",
+    expected: "[RN-007] deriva la tasa implícita de los dos montos entre monedas distintas"
+  },
+  {
+    name: "umbral verde >= por >",
+    file: "src/domain/goals.ts",
+    replace: ["ratio >= GOAL_GREEN_RATIO", "ratio > GOAL_GREEN_RATIO"],
+    test: "tests/unit/domain/goals.test.ts",
+    expected: "[RN-020][RN-021] ritmo 56250 céntimos/mes"
+  },
+  {
+    name: "insight descartado reaparece sin aumentar gravedad",
+    file: "src/domain/insights.ts",
+    replace: [
+      "severityRank(candidate.severity) > severityRank(existing.severity)",
+      "severityRank(candidate.severity) >= severityRank(existing.severity)"
+    ],
+    test: "tests/unit/domain/insights.test.ts",
+    expected:
+      "[RN-040] deduplica por regla, entidad y periodo, y un descartado solo reaparece si sube"
+  },
+  {
+    name: "redondeo half-up >= por >",
+    file: "src/domain/money.ts",
+    replace: ["remainder * 2n >= denominator", "remainder * 2n > denominator"],
+    test: "tests/unit/domain/money.test.ts",
+    expected: "[RN-003] redondea half-up los ejemplos documentados"
+  },
+  {
+    name: "racha usa fecha de transacción en lugar de registro",
+    file: "src/domain/streaks.ts",
+    replace: [
+      ".map((activity) => activity.registeredOn)",
+      ".map((activity) => activity.occurredOn ?? activity.registeredOn)"
+    ],
+    test: "tests/unit/domain/streaks.test.ts",
+    expected:
+      "[RN-051][RN-052] usa la fecha de registro, cuenta un día una vez y mantiene vigente ayer"
+  },
+  {
+    name: "logro de presupuesto exige más de dos presupuestos",
+    file: "src/domain/streaks.ts",
+    replace: ["usages.length >= 2", "usages.length > 2"],
+    test: "tests/unit/domain/streaks.test.ts",
+    expected: "[RN-050][RN-052] evalúa todo el catálogo con umbrales exactos"
+  },
+  {
+    name: "fila CSV inválida aborta el lote",
+    file: "src/domain/csv.ts",
+    replace: [
+      'return { status: "invalid", reason: "invalid_date" };',
+      'throw new TypeError("Fecha CSV inválida.");'
+    ],
+    test: "tests/unit/domain/csv.test.ts",
+    expected: "[RN-014][RN-012] clasifica cada fila y una inválida no bloquea las válidas"
+  },
+  {
+    name: "lote CSV no marca duplicados posibles",
+    file: "src/domain/csv.ts",
+    replace: ["knownRows.some((known) => isDuplicateCsvRow(known, identity))", "false"],
+    test: "tests/unit/domain/csv.test.ts",
+    expected: "[RN-014][RN-012] clasifica cada fila y una inválida no bloquea las válidas"
+  },
+  {
+    name: "umbral ámbar 0.90 >= por >",
+    file: "src/domain/goals.ts",
+    replace: ["ratio >= GOAL_AMBER_RATIO", "ratio > GOAL_AMBER_RATIO"],
+    test: "tests/unit/domain/goals.test.ts",
+    expected: "[RN-020][RN-021] ritmo 50625 céntimos/mes"
+  },
+  {
+    name: "umbral normal 80 % <= por <",
+    file: "src/domain/budgets.ts",
+    replace: ["usage <= BUDGET_NORMAL_USAGE_MAX", "usage < BUDGET_NORMAL_USAGE_MAX"],
+    test: "tests/unit/domain/budgets.test.ts",
+    expected: "[RN-026] clasifica gasto 40000"
+  },
+  {
+    name: "umbral ámbar 100 % <= por <",
+    file: "src/domain/budgets.ts",
+    replace: ["usage <= BUDGET_AMBER_USAGE_MAX", "usage < BUDGET_AMBER_USAGE_MAX"],
+    test: "tests/unit/domain/budgets.test.ts",
+    expected: "[RN-026] clasifica gasto 50000"
+  },
+  {
+    name: "ventana mínima 30 por 31 días",
+    file: "src/domain/goals.ts",
+    replace: ["Math.max(\n    MIN_GOAL_PACE_WINDOW_DAYS,", "Math.max(\n    31,"],
+    test: "tests/unit/domain/goals.test.ts",
+    expected: "[RN-020] usa ventana de 30 o 90 días según el primer aporte"
+  },
+  {
+    name: "último día de mes corto por día ancla",
+    file: "src/domain/recurring.ts",
+    replace: ["Math.min(dayOf(anchor), daysInMonth(year, month))", "dayOf(anchor)"],
+    test: "tests/unit/domain/recurring.test.ts",
+    expected: "[RN-030] conserva el día 31 usando el último día de meses cortos"
+  },
+  {
+    name: "reanudación vuelve a generar ocurrencias previas a la pausa",
+    file: "src/domain/recurring.ts",
+    replace: ["rule.resumedOn ?? rule.startOn", "rule.startOn"],
+    test: "tests/unit/domain/recurring.test.ts",
+    expected: "[RN-030] al reanudar calcula la próxima fecha sin crear ocurrencias retroactivas"
+  }
+];
+
+function runVitest(test) {
+  return new Promise((resolve) => {
+    const child = spawn(process.execPath, [vitest, "run", test], {
+      cwd: root,
+      stdio: ["ignore", "pipe", "pipe"]
+    });
+    let output = "";
+    child.stdout.on("data", (chunk) => (output += chunk));
+    child.stderr.on("data", (chunk) => (output += chunk));
+    child.on("close", (code) => resolve({ code, output }));
+  });
+}
+
+const selectedControls = process.argv.slice(2);
+const controlsToRun =
+  selectedControls.length === 0
+    ? controls
+    : controls.filter((control) =>
+        selectedControls.some((selected) => control.name.includes(selected))
+      );
+
+assert.ok(controlsToRun.length > 0, "No hay controles de mutación seleccionados.");
+
+async function runControl(control) {
+  const path = new URL(`../${control.file}`, import.meta.url);
+  const source = await readFile(path, "utf8");
+  assert.ok(
+    source.includes(control.replace[0]),
+    `No se encontró el sitio de mutación: ${control.name}`
+  );
+
+  try {
+    await writeFile(path, source.replace(control.replace[0], control.replace[1]));
+    const result = await runVitest(control.test);
+    assert.notEqual(result.code, 0, `El mutante sobrevivió: ${control.name}`);
+    assert.match(
+      result.output,
+      new RegExp(control.expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+    );
+    console.log(`MUTANTE ELIMINADO | ${control.name} | ${control.expected}`);
+  } finally {
+    await writeFile(path, source);
+  }
+}
+
+const controlsByFile = Map.groupBy(controlsToRun, (control) => control.file);
+await Promise.all(
+  [...controlsByFile.values()].map(async (controlsForFile) => {
+    for (const control of controlsForFile) await runControl(control);
+  })
+);

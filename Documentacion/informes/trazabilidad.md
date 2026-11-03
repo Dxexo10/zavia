@@ -9,9 +9,9 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | F1 | PS | 6 | 6 | 0 |
 | F1 | RNF | 10 | 10 | 0 |
 | F1 | SEG | 11 | 11 | 0 |
-| F2 | RN | 34 | 0 | 34 |
-| F2 | RNF | 5 | 0 | 5 |
-| F2 | SEG | 1 | 0 | 1 |
+| F2 | RN | 34 | 34 | 0 |
+| F2 | RNF | 5 | 5 | 0 |
+| F2 | SEG | 1 | 1 | 0 |
 | F3 | PS | 8 | 0 | 8 |
 | F3 | RN | 3 | 0 | 3 |
 | F3 | RNF | 10 | 0 | 10 |
@@ -27,7 +27,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | F5 | SEG | 34 | 1 | 33 |
 | F6 | PS | 3 | 0 | 3 |
 | F6 | RF | 7 | 0 | 7 |
-| F6 | RNF | 1 | 0 | 1 |
+| F6 | RNF | 1 | 1 | 0 |
 | F6 | SEG | 2 | 0 | 2 |
 | F7 | RF | 4 | 0 | 4 |
 | F7 | RNF | 4 | 0 | 4 |
@@ -120,45 +120,45 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RF-039 | F4 | Pendiente por fase | — |
 | RF-040 | F6 | Pendiente por fase | — |
 | RF-041 | F12 | Pendiente por fase | — |
-| RN-001 | F2 | Pendiente por fase | — |
-| RN-002 | F2 | Pendiente por fase | — |
-| RN-003 | F2 | Pendiente por fase | — |
-| RN-004 | F2 | Pendiente por fase | — |
-| RN-005 | F2 | Pendiente por fase | — |
+| RN-001 | F2 | Cubierto | tests/unit/domain/money.test.ts<br>tests/unit/domain/schemas.test.ts |
+| RN-002 | F2 | Cubierto | tests/unit/domain/balances.test.ts |
+| RN-003 | F2 | Cubierto | tests/unit/domain/money.test.ts |
+| RN-004 | F2 | Cubierto | tests/unit/domain/dates.test.ts |
+| RN-005 | F2 | Cubierto | tests/unit/domain/schemas.test.ts |
 | RN-006 | F3 | Pendiente por fase | — |
-| RN-007 | F2 | Pendiente por fase | — |
+| RN-007 | F2 | Cubierto | tests/unit/domain/balances.test.ts |
 | RN-008 | F3 | Pendiente por fase | — |
 | RN-009 | F3 | Pendiente por fase | — |
-| RN-010 | F2 | Pendiente por fase | — |
-| RN-011 | F2 | Pendiente por fase | — |
-| RN-012 | F2 | Pendiente por fase | — |
-| RN-013 | F2 | Pendiente por fase | — |
-| RN-014 | F2 | Pendiente por fase | — |
-| RN-020 | F2 | Pendiente por fase | — |
-| RN-021 | F2 | Pendiente por fase | — |
-| RN-022 | F2 | Pendiente por fase | — |
-| RN-023 | F2 | Pendiente por fase | — |
-| RN-024 | F2 | Pendiente por fase | — |
-| RN-025 | F2 | Pendiente por fase | — |
-| RN-026 | F2 | Pendiente por fase | — |
-| RN-027 | F2 | Pendiente por fase | — |
-| RN-030 | F2 | Pendiente por fase | — |
-| RN-031 | F2 | Pendiente por fase | — |
-| RN-040 | F2 | Pendiente por fase | — |
-| RN-041 | F2 | Pendiente por fase | — |
-| RN-042 | F2 | Pendiente por fase | — |
-| RN-043 | F2 | Pendiente por fase | — |
-| RN-044 | F2 | Pendiente por fase | — |
-| RN-045 | F2 | Pendiente por fase | — |
-| RN-046 | F2 | Pendiente por fase | — |
-| RN-050 | F2 | Pendiente por fase | — |
-| RN-051 | F2 | Pendiente por fase | — |
-| RN-052 | F2 | Pendiente por fase | — |
-| RN-060 | F2 | Pendiente por fase | — |
-| RN-061 | F2 | Pendiente por fase | — |
+| RN-010 | F2 | Cubierto | tests/unit/domain/accounts-categories.test.ts |
+| RN-011 | F2 | Cubierto | tests/unit/domain/accounts-categories.test.ts |
+| RN-012 | F2 | Cubierto | tests/unit/domain/csv.test.ts |
+| RN-013 | F2 | Cubierto | tests/unit/domain/accounts-categories.test.ts |
+| RN-014 | F2 | Cubierto | tests/unit/domain/csv.test.ts |
+| RN-020 | F2 | Cubierto | tests/unit/domain/goals.test.ts |
+| RN-021 | F2 | Cubierto | tests/unit/domain/goals.test.ts |
+| RN-022 | F2 | Cubierto | tests/unit/domain/goals.test.ts |
+| RN-023 | F2 | Cubierto | tests/unit/domain/goals.test.ts |
+| RN-024 | F2 | Cubierto | tests/unit/domain/goals.test.ts |
+| RN-025 | F2 | Cubierto | tests/unit/domain/budgets.test.ts |
+| RN-026 | F2 | Cubierto | tests/unit/domain/budgets.test.ts |
+| RN-027 | F2 | Cubierto | tests/unit/domain/money.test.ts |
+| RN-030 | F2 | Cubierto | tests/unit/domain/recurring.test.ts |
+| RN-031 | F2 | Cubierto | tests/unit/domain/recurring.test.ts |
+| RN-040 | F2 | Cubierto | tests/unit/domain/insights.test.ts |
+| RN-041 | F2 | Cubierto | tests/unit/domain/insights.test.ts |
+| RN-042 | F2 | Cubierto | tests/unit/domain/insights.test.ts |
+| RN-043 | F2 | Cubierto | tests/unit/domain/insights.test.ts |
+| RN-044 | F2 | Cubierto | tests/unit/domain/insights.test.ts |
+| RN-045 | F2 | Cubierto | tests/unit/domain/insights.test.ts |
+| RN-046 | F2 | Cubierto | tests/unit/domain/insights.test.ts |
+| RN-050 | F2 | Cubierto | tests/unit/domain/streaks.test.ts |
+| RN-051 | F2 | Cubierto | tests/unit/domain/streaks.test.ts |
+| RN-052 | F2 | Cubierto | tests/unit/domain/streaks.test.ts |
+| RN-060 | F2 | Cubierto | tests/unit/domain/demo-name.test.ts |
+| RN-061 | F2 | Cubierto | tests/unit/domain/demo-data.test.ts |
 | RN-062 | F5 | Pendiente por fase | — |
 | RN-063 | F5 | Pendiente por fase | — |
-| RN-070 | F2 | Pendiente por fase | — |
+| RN-070 | F2 | Cubierto | tests/unit/domain/dates.test.ts |
 | RN-071 | F4 | Pendiente por fase | — |
 | RNF-001 | F7 | Pendiente por fase | — |
 | RNF-002 | F7 | Pendiente por fase | — |
@@ -170,10 +170,10 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-008 | F14 | Pendiente por fase | — |
 | RNF-009 | F14 | Pendiente por fase | — |
 | RNF-010 | F10 | Pendiente por fase | — |
-| RNF-011 | F6 | Pendiente por fase | — |
+| RNF-011 | F6 | Cubierto | tests/unit/domain/balances.test.ts |
 | RNF-012 | F14 | Pendiente por fase | — |
-| RNF-013 | F2 | Pendiente por fase | — |
-| RNF-014 | F2 | Pendiente por fase | — |
+| RNF-013 | F2 | Cubierto | tests/unit/domain/money.test.ts |
+| RNF-014 | F2 | Cubierto | tests/unit/domain/dates.test.ts |
 | RNF-015 | F5 | Pendiente por fase | — |
 | RNF-016 | F3 | Pendiente por fase | — |
 | RNF-017 | F3 | Pendiente por fase | — |
@@ -189,7 +189,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-029 | F5 | Pendiente por fase | — |
 | RNF-030 | F5 | Pendiente por fase | — |
 | RNF-031 | F5 | Pendiente por fase | — |
-| RNF-032 | F2 | Pendiente por fase | — |
+| RNF-032 | F2 | Cubierto | tests/unit/domain/demo-data.test.ts |
 | RNF-033 | F4 | Pendiente por fase | — |
 | RNF-034 | F4 | Pendiente por fase | — |
 | RNF-035 | F4 | Pendiente por fase | — |
@@ -207,14 +207,14 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | RNF-047 | F4 | Pendiente por fase | — |
 | RNF-048 | F1 | Cubierto | tests/unit/smoke.test.mjs |
 | RNF-049 | F1 | Cubierto | tests/static/quality-config.test.mjs |
-| RNF-050 | F2 | Pendiente por fase | — |
-| RNF-051 | F2 | Pendiente por fase | — |
+| RNF-050 | F2 | Cubierto | tests/static/quality-config.test.mjs |
+| RNF-051 | F2 | Cubierto | tests/static/layer-rule.test.mjs |
 | RNF-052 | F1 | Cubierto | tests/static/quality-config.test.mjs |
-| RNF-053 | F1 | Cubierto | tests/static/ci-security.test.mjs<br>tests/static/quality-config.test.mjs |
+| RNF-053 | F1 | Cubierto | tests/static/ci-security.test.mjs<br>tests/static/commitlint-dependabot.test.mjs<br>tests/static/quality-config.test.mjs |
 | RNF-054 | F13 | Pendiente por fase | — |
 | RNF-055 | F1 | Cubierto | tests/unit/check-traceability.test.ts |
 | RNF-056 | F13 | Pendiente por fase | — |
-| RNF-057 | F1 | Cubierto | tests/unit/clock.test.ts<br>tests/static/foundation-contracts.test.mjs |
+| RNF-057 | F1 | Cubierto | tests/unit/clock.test.ts<br>tests/unit/domain/demo-data.test.ts<br>tests/static/foundation-contracts.test.mjs |
 | RNF-058 | F1 | Cubierto | tests/static/f1-controls.test.mjs |
 | RNF-059 | F5 | Pendiente por fase | — |
 | RNF-060 | F13 | Pendiente por fase | — |
@@ -287,7 +287,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | SEG-INF-08 | F14 | Pendiente por fase | — |
 | SEG-INP-01 | F5 | Pendiente por fase | — |
 | SEG-INP-02 | F1 | Cubierto | tests/static/f1-controls.test.mjs |
-| SEG-INP-03 | F2 | Pendiente por fase | — |
+| SEG-INP-03 | F2 | Cubierto | tests/unit/domain/demo-name.test.ts |
 | SEG-INP-04 | F5 | Pendiente por fase | — |
 | SEG-INP-05 | F3 | Pendiente por fase | — |
 | SEG-INP-06 | F3 | Pendiente por fase | — |
@@ -314,7 +314,7 @@ Generada por `pnpm check:traceability`. Los pendientes no usan excepciones: se e
 | SEG-SEC-06 | F14 | Pendiente por fase | — |
 | SEG-SUP-01 | F1 | Cubierto | tests/static/ci-security.test.mjs |
 | SEG-SUP-02 | F1 | Cubierto | tests/static/f1-controls.test.mjs<br>tests/static/local-environment.test.mjs |
-| SEG-SUP-03 | F1 | Cubierto | tests/static/f1-controls.test.mjs |
+| SEG-SUP-03 | F1 | Cubierto | tests/static/commitlint-dependabot.test.mjs<br>tests/static/f1-controls.test.mjs |
 | SEG-SUP-04 | F13 | Pendiente por fase | — |
 | SEG-SUP-05 | F1 | Cubierto | tests/static/f1-controls.test.mjs |
 | SEG-SUP-06 | F1 | Cubierto | tests/static/ci-security.test.mjs |
