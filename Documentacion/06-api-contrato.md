@@ -1,6 +1,6 @@
 # 06 · Contrato de API — Zavia
 
-> Estado: BORRADOR v0.4
+> Estado: BORRADOR v0.5
 > Zavia **no expone una API REST pública** en el MVP. Su "API" es el conjunto de **casos de uso** de la capa `application` (documento 05), invocados desde la interfaz mediante **Server Actions** (mutaciones) y **funciones de consulta** en Server Components (lecturas), más unos pocos **Route Handlers** para lo que no encaja en ese modelo (exportar CSV, tareas programadas, salud). Este documento fija nombre, entrada, salida, errores, reglas de acceso y trazabilidad de cada uno.
 
 ## 1. Convenciones generales
@@ -193,10 +193,10 @@ Una transferencia no se edita: se elimina y se vuelve a crear. `amountInMinor` e
 | Función | Entrada | Salida | Acceso | Errores | RF / RN |
 |---------|---------|--------|--------|---------|---------|
 | `previewImport` | `accountId`, archivo CSV | `{ rows: { rowNumber, status: 'valid'\|'invalid'\|'duplicate', reason?: ErrorCode, normalized? }[], counts }` — **sin estado en el servidor**: no guarda nada | U | `FILE_TOO_LARGE`, `FILE_INVALID` | RF-011 · RN-012, 014 · RNF-026 |
-| `confirmImport` | `accountId, filename, rows[]` (las normalizadas), `includeDuplicates?: number[]` | `{ imported, skipped, batchId }` | U | `FILE_INVALID`, `RATE_LIMITED` (máx. 5 importaciones por hora y usuario) | RF-011 |
+| `confirmImport` | `accountId, filename, rows[]` (las normalizadas), `includeDuplicates?: number[]` | `{ imported, skipped, batchId }` | U | `FILE_INVALID`, `QUOTA_EXCEEDED`, `RATE_LIMITED` (máx. 5 importaciones por hora y usuario) | RF-011 · SEG-AUZ-08 |
 | Exportar | `GET /api/export/transactions` (ver sección 6) | archivo CSV | U | — | RF-012 · RNF-026 |
 
-`confirmImport` **vuelve a validar todo en el servidor**; nunca confía en las filas que envía el cliente (RNF-015).
+`confirmImport` **vuelve a validar todo en el servidor**; nunca confía en las filas que envía el cliente (RNF-015). Como los orígenes reservados (`import`) no los puede escribir el cliente, el servidor ejecuta la función `confirm_import` con el rol de servicio y el `user_id` de la sesión verificada (SEG-AUZ-08).
 
 ### 5.7 Metas
 

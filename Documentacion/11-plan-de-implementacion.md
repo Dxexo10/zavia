@@ -1,6 +1,6 @@
 # 11 · Plan de Implementación — Zavia
 
-> Estado: BORRADOR v0.5 · Convierte los documentos 00 a 10 en **15 fases ejecutables** por el agente (Codex), cada una con los documentos que debe leer, sus tareas, sus criterios de aceptación y una **parada obligatoria** para tu confirmación.
+> Estado: BORRADOR v0.8 · Convierte los documentos 00 a 10 en **15 fases ejecutables** por el agente (Codex), cada una con los documentos que debe leer, sus tareas, sus criterios de aceptación y una **parada obligatoria** para tu confirmación.
 > El agente **nunca** lee los 13 documentos de golpe: en cada fase lee solo los que esta tabla le indica (más `AGENTS.md`).
 
 ## 1. Cómo funciona el plan
@@ -66,6 +66,17 @@ Una fase solo se cierra cuando se cumple **todo** esto, con evidencia (salida de
 | 9 | **Cliente OAuth de Google** (gratis, en Google Cloud **sin habilitar facturación**): pantalla de consentimiento con ámbitos básicos y redirección al callback de Supabase de *staging* y de producción; cuenta de Google con **2FA** 🔎 | Un inicio de sesión de prueba con una cuenta de Google |
 | 10 | Archivo `.env.local` con las claves de *staging* (**nunca** las de producción para el agente) | `.env.local` está en `.gitignore` |
 
+**Cuándo se necesita cada ítem de F0** (no todo bloquea todas las fases):
+
+| Ítems | Necesarios desde | Nota |
+|-------|------------------|------|
+| 1 a 5 (Docker, Node/pnpm, Git y repositorio, skill, documentos) | F1 | Ya cumplidos |
+| 6 Supabase en la nube (*staging* y producción) | **F14** (despliegue y previsualizaciones) | **F3 y F5 se desarrollan y prueban con Supabase local** (Docker); la nube no hace falta antes |
+| 7 Vercel | F14 | |
+| 8 Turnstile | F5 (prueba manual con claves reales) y F14 | El desarrollo y las pruebas usan las claves de prueba oficiales |
+| 9 Cliente OAuth de Google | **F5** (prueba manual del acceso real contra el Supabase local) y F14 | Google admite redirecciones a `localhost` |
+| 10 `.env.local` | F5 | Solo con claves de desarrollo, nunca de producción |
+
 **Costo cero:** ningún paso de F0 debe pedirte tarjeta de crédito ni dominio propio (RNF-070). El acceso de las cuentas reales es **solo con Google** (`09-seguridad.md` §4.1): el cliente OAuth se crea gratis, sin facturación. La URL pública será `<proyecto>.vercel.app`.
 
 **Puerta:** el agente, al iniciar F1, recorre esta lista y te dice qué falta.
@@ -110,7 +121,7 @@ Una fase solo se cierra cuando se cumple **todo** esto, con evidencia (salida de
 | F2-T12 Generador de datos demo | RN-061 | 5.9 (3 metas, 3 presupuestos, insights, racha) |
 | F2-T13 Esquemas Zod compartidos | 06 §1 y 4 | Entradas válidas e inválidas |
 
-**Aceptación:** cobertura 100 % en dinero, metas, presupuestos, recurrentes e insights; las propiedades del doc 10 en verde; mutación base (Stryker) con umbral inicial; **ningún** import de `next`, `react`, `supabase` ni `Date.now()` en `domain/` (regla de capas); trazabilidad de RN-001 a RN-071 en lo que corresponde a lógica pura.
+**Aceptación:** cobertura 100 % en dinero, metas, presupuestos, recurrentes e insights; las propiedades del doc 10 en verde; **control manual de mutación** (`pnpm test:mutation-control`: mutantes críticos de dinero, metas, presupuestos, recurrentes y rachas, todos eliminados); la línea base de Stryker queda como **deuda de F13-T04** (desviación aceptada por el autor: con las versiones fijadas el ejecutor de Vitest no produjo resultados fiables); **ningún** import de `next`, `react`, `supabase` ni `Date.now()` en `domain/` (regla de capas); trazabilidad de RN-001 a RN-071 en lo que corresponde a lógica pura.
 
 ---
 
@@ -120,9 +131,9 @@ Una fase solo se cierra cuando se cumple **todo** esto, con evidencia (salida de
 | Tarea | Detalle |
 |-------|---------|
 | F3-T01 | Migraciones: extensiones (`pg_trgm`, `pg_cron` 🔎), enums y las 15 tablas con claves compuestas, `CHECK` e índices |
-| F3-T02 | RLS con el patrón único en todas las tablas; **revocar `anon`**; permisos por tabla y por columna (09 §4.2) |
+| F3-T02 | RLS con el patrón único en todas las tablas; **revocar `anon`**; permisos por tabla y por columna (09 §4.2); política de inserción de `transactions` que exige `source = 'manual'`, `recurring_id` e `import_batch_id` nulos (SEG-AUZ-08) |
 | F3-T03 | Disparadores de invariantes y de **cuotas** (09 §5, RNF-067, 068) |
-| F3-T04 | Funciones SQL: `create_transfer`, `add_goal_entry`, `archive_account`, `confirm_import`, `monthly_totals`, búsqueda con parámetro, y `database_size_bytes` (solo rol de servicio); `search_path` fijo y `execute` solo a `authenticated` (salvo la última) |
+| F3-T04 | Funciones SQL: `create_transfer`, `add_goal_entry`, `archive_account`, `monthly_totals` y búsqueda con parámetro (`authenticated`); `confirm_import` y `database_size_bytes` (**solo `service_role`**); `search_path` fijo y `execute` revocado a `public` |
 | F3-T05 | Vistas `security_invoker` (`account_balances`, `ledger`) |
 | F3-T06 | Alta automática de `profiles` y categorías predeterminadas (claves) |
 | F3-T07 | Tareas `pg_cron`: limpieza de demos y anónimos huérfanos, purga de eliminados (30 d), purga de `demo_signups` (24 h) |
@@ -251,7 +262,7 @@ Una fase solo se cierra cuando se cumple **todo** esto, con evidencia (salida de
 | F13-T01 | **Suite de seguridad completa** PS-01 a PS-32 (prompt T3) e informe `seguridad.md` |
 | F13-T02 | Auditoría final de diseño (prompt D5) y detector sin hallazgos |
 | F13-T03 | Rendimiento: Lighthouse CI en todas las pantallas, k6 con 5,000 movimientos, presupuesto de JS |
-| F13-T04 | Mutación con Stryker sobre `domain/` y mejora de pruebas débiles |
+| F13-T04 | Mutación: **reevaluar Stryker** (deuda de F2; probar una combinación compatible con más de 14 días de antigüedad) y, si no es viable, **ampliar el control manual** (`pnpm test:mutation-control`); mejorar pruebas débiles |
 | F13-T05 | Matriz completa de navegadores × anchos (Chromium, Firefox, WebKit × 360/768/1280) |
 | F13-T06 | Trazabilidad al 100 % (excepciones justificadas) y matriz generada |
 | F13-T07 | `scripts/verify-env.ts` (verificación de claves, doc 12 §D) y *smoke tests* |

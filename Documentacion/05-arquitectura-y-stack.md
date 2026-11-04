@@ -1,6 +1,6 @@
 # 05 · Arquitectura y Stack — Zavia
 
-> Estado: BORRADOR v0.4 · Las versiones exactas **no se fijan aquí**: al iniciar el proyecto, el agente instala la última versión estable de cada paquete, la fija en `package.json` y registra en el README cualquier diferencia con este documento.
+> Estado: BORRADOR v0.5 · Las versiones exactas **no se fijan aquí**: al iniciar el proyecto, el agente instala la última versión estable de cada paquete, la fija en `package.json` y registra en el README cualquier diferencia con este documento.
 > Puntos que el agente **debe verificar en la documentación vigente** antes de implementar están marcados con 🔎.
 
 ## 1. Vista general
@@ -164,7 +164,7 @@ Se descartan por diseño: registro con correo, confirmación, recuperación de c
 | Eliminar demos caducados y anónimos huérfanos (más de 1 h sin perfil) | `pg_cron` ejecutando SQL | Cada hora | 🔎 Verificar permisos para borrar en `auth.users` desde `pg_cron` |
 | Purgar transacciones, transferencias y metas eliminadas hace más de 30 días | `pg_cron` ejecutando SQL | Diario | RNF-016 |
 | Purgar `demo_signups` de más de 24 h | `pg_cron` ejecutando SQL | Cada hora | |
-| Generar ocurrencias recurrentes | Endpoint `/api/cron/recurring` llamado por **Vercel Cron**, **más** recuperación al iniciar sesión | Diario | La lógica es de dominio (TypeScript), por eso no es SQL. Protegido con `CRON_SECRET` 🔎 Verificar límites del plan gratuito |
+| Generar ocurrencias recurrentes | Endpoint `/api/cron/recurring` llamado por **Vercel Cron**, **más** recuperación al iniciar sesión | Diario | La lógica es de dominio (TypeScript), por eso no es SQL. Las ocurrencias se escriben con el **rol de servicio** (`source = 'recurring'`) usando el `user_id` de cada regla; en la recuperación al iniciar sesión, solo las reglas del usuario de la sesión verificada. Protegido con `CRON_SECRET` |
 | Mantener activa la base | El mismo cron diario consulta la base; más un monitor externo gratuito | Diario | RNF-008, RNF-009. Supabase puede pausar proyectos gratuitos con muy poca actividad en 7 días |
 | Respaldo manual cifrado | `pnpm db:backup` (volcado cifrado, solo de datos de usuarios reales) ejecutado por ti antes de cambios grandes y cada cierto tiempo | Manual | **Verificado:** el plan gratuito de Supabase no incluye respaldos automáticos ni descargables. **Nunca** guardar volcados como artefactos de CI en un repositorio público |
 

@@ -1,6 +1,6 @@
 # 10 · Pruebas Automatizadas — Zavia
 
-> Estado: BORRADOR v0.4 · Convierte los requerimientos (01, 02), las reglas (03), el contrato (06), el diseño (07) y la seguridad (09) en un plan de pruebas **ejecutable y trazable**.
+> Estado: BORRADOR v0.5 · Convierte los requerimientos (01, 02), las reglas (03), el contrato (06), el diseño (07) y la seguridad (09) en un plan de pruebas **ejecutable y trazable**.
 > 🔎 Las herramientas y claves de prueba de terceros (Cloudflare Turnstile, Playwright, Lighthouse CI, Stryker) cambian: el agente verifica su documentación vigente antes de configurarlas.
 
 ## 1. Principios
@@ -196,7 +196,7 @@ Cada fila se convierte en una o más pruebas. Los números provienen de `03-regl
 | **Cuotas** | Superar 5,000 movimientos (usuario) y 1,000 (demo), 100 cuentas, 200 metas, 50 recurrentes; una importación que no cabe se rechaza completa con `QUOTA_EXCEEDED` | PS-07, RNF-067, RN-009 |
 | **Freno por tamaño** | Con un tamaño de base simulado sobre el 70 % del límite, el demo responde `DEMO_CAPACITY_REACHED` y no se crea el perfil; con el tamaño normal, funciona | RNF-071, SEG-DEM-10 |
 | **Idempotencia** | Mismo `client_request_id` en `transactions`, `transfers`, `goal_entries`; ocurrencias recurrentes duplicadas | RNF-010 |
-| **Funciones SQL** | `create_transfer`, `add_goal_entry` (atómico, completa la meta), `archive_account` (saldo ≠ 0), `confirm_import`; `search_path` fijo; no ejecutables por `anon` | PS-31, SEG-AUZ-06 |
+| **Funciones SQL** | `create_transfer`, `add_goal_entry` (atómico, completa la meta), `archive_account` (saldo ≠ 0); `search_path` fijo; no ejecutables por `anon`. `confirm_import` y `database_size_bytes` **no** ejecutables por `authenticated` ni `anon`; las funciones de disparador (`security definer`) no invocables por el cliente; inserción directa en `transactions` con `source` distinto de `manual` rechazada | PS-31, PS-05, SEG-AUZ-06, SEG-AUZ-08 |
 | **Vistas y agregados** | `account_balances`, `ledger`, `monthly_totals` coinciden con el cálculo del dominio sobre un mismo conjunto de datos | RF-020 |
 | **Índices** | Existen y se usan con 5,000 filas (`EXPLAIN`; se fuerza `enable_seqscan = off` solo en la prueba, porque el planificador prefiere recorridos secuenciales en tablas pequeñas) | RNF-007 |
 | **Tareas programadas (SQL)** | Limpieza de demos vencidos y anónimos huérfanos; purga de eliminados a los 30 días; purga de `demo_signups` a las 24 h (se manipulan las marcas de tiempo) | PS-09, RNF-016, 027 |

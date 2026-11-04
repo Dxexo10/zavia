@@ -1,6 +1,6 @@
 # 09 · Seguridad — Zavia
 
-> Estado: BORRADOR v0.4 · **Este es el único documento de la zona de seguridad**: modelo de amenazas, controles, permisos de base de datos, pruebas y checklist. Los demás documentos solo referencian sus IDs (`SEG-…`, `PS-…`).
+> Estado: BORRADOR v0.6 · **Este es el único documento de la zona de seguridad**: modelo de amenazas, controles, permisos de base de datos, pruebas y checklist. Los demás documentos solo referencian sus IDs (`SEG-…`, `PS-…`).
 > Los puntos marcados 🔎 deben **verificarse en la documentación vigente** antes de implementarse. Sin decisiones pendientes en esta versión.
 > Este documento es una guía de ingeniería, no una auditoría ni asesoría legal.
 
@@ -89,9 +89,9 @@
 | SEG-AUZ-03 | **Cada acción comprueba la sesión por sí misma** | `requireUser()` en toda Server Action y Route Handler; el *proxy* solo refresca sesión y redirige | 05 §5.2 |
 | SEG-AUZ-04 | `user_id` **nunca** se recibe como entrada | Se toma de la sesión verificada | 06 §7 |
 | SEG-AUZ-05 | Un `id` ajeno responde **`NOT_FOUND`**, no `FORBIDDEN` | No se revela la existencia | 06 §3 |
-| SEG-AUZ-06 | Vistas con `security_invoker = true`; funciones SQL `security invoker`, con `search_path` fijo y `execute` revocado a `public` y concedido solo a `authenticated` | Evita que una vista o función salte RLS | 04 §6 |
+| SEG-AUZ-06 | Vistas con `security_invoker = true`; funciones SQL `security invoker` con `search_path` fijo y `execute` revocado a `public`. Las que solo debe llamar el servidor (`confirm_import`, `database_size_bytes`) se conceden **únicamente a `service_role`**; las de uso del cliente, a `authenticated`. **Excepción acotada:** las funciones de **disparador** (alta automática del perfil, registro de actividad de la racha) pueden ser `security definer` con `search_path` fijo porque deben escribir en tablas que el cliente no puede escribir; no reciben parámetros del usuario, solo escriben la fila del `user_id` de la fila disparadora y el cliente no puede invocarlas | 04 §6 |
 | SEG-AUZ-07 | **Permisos por columna** en `profiles` | El cliente solo puede actualizar columnas de preferencias; **no** `is_demo`, `demo_expires_at` | T-02 |
-| SEG-AUZ-08 | `transactions.source` y `recurring_id` | Una restricción impide que el cliente se haga pasar por `recurring`/`seed`/`import` fuera de las funciones previstas | T-02 |
+| SEG-AUZ-08 | **Orígenes reservados** | La política de **inserción** del cliente exige `source = 'manual'`, `recurring_id is null` e `import_batch_id is null`. Los orígenes `import`, `recurring` y `seed` solo los escribe el **servidor con el rol de servicio** (importación confirmada, generación de recurrentes y siembra del demo), siempre con el `user_id` tomado de la sesión verificada o de la regla procesada | T-02 |
 | SEG-AUZ-09 | **Tablas de solo servidor** | `achievements`, `user_stats`, `activity_days` sin permiso de escritura para el cliente; las escribe el servidor con la clave de servicio tras verificar la regla | T-03 |
 | SEG-AUZ-10 | **Cuotas por usuario** | Disparadores limitan filas: usuario real hasta **5,000** movimientos; **demo hasta 1,000**; 100 cuentas; 200 metas; 50 recurrentes (valores iniciales, ajustables; RN-009) | T-04 |
 
@@ -103,7 +103,7 @@
 |-------|:----:|:--------:|:----------:|:--------:|-------|
 | `profiles` | propio | ✘ (disparador de alta) | solo columnas de preferencias | ✘ | `is_demo`, `demo_expires_at`: solo servidor |
 | `accounts`, `categories`, `goals`, `budgets`, `recurring_rules` | propio | propio | propio | propio | Con `CHECK` y disparadores de invariantes |
-| `transactions`, `transfers`, `goal_entries` | propio | propio | propio | propio (lógica) | Invariantes en la base (sección 5) |
+| `transactions`, `transfers`, `goal_entries` | propio | propio (en `transactions`, solo con `source = 'manual'`) | propio | propio (lógica) | Invariantes en la base (sección 5); los orígenes reservados los escribe el servidor |
 | `import_batches`, `insight_dismissals` | propio | propio | ✘ | propio | |
 | `achievements`, `user_stats`, `activity_days` | propio | ✘ | ✘ | ✘ | Solo servidor |
 | `demo_signups` | ✘ | ✘ | ✘ | ✘ | **Sin política alguna**: solo rol de servicio |
@@ -177,8 +177,8 @@ Implicación documentada (Next.js 16): usar *nonce* exige **renderizado dinámic
 |----|---------|---------|
 | SEG-SUP-01 | `pnpm-lock.yaml` versionado; instalación con `--frozen-lockfile` en CI | |
 | SEG-SUP-02 | `pnpm audit` en CI: cero vulnerabilidades críticas o altas al fusionar | RNF-024 |
-| SEG-SUP-03 | Dependabot (seguridad y versiones, agrupadas) y revisión de cada actualización | |
-| SEG-SUP-04 | **Antigüedad mínima:** no instalar versiones publicadas hace menos de 14 días (un paquete comprometido suele detectarse en ese plazo) salvo parche de seguridad verificado | |
+| SEG-SUP-03 | Dependabot (seguridad y versiones, agrupadas) y revisión de cada actualización. **Configurado con `cooldown` de 14 días** (las versiones nuevas esperan antes de proponerse) 🔎 y con los *major* de TypeScript ignorados hasta que `typescript-eslint` los soporte; ninguna actualización se fusiona sin pasar el CI | |
+| SEG-SUP-04 | **Antigüedad mínima:** no instalar versiones publicadas hace menos de 14 días (un paquete comprometido suele detectarse en ese plazo) salvo parche de seguridad verificado; **vale también para lo que proponga Dependabot** (comprobar la fecha de publicación antes de fusionar) | |
 | SEG-SUP-05 | Scripts de instalación de dependencias bloqueados por defecto; se permite solo la lista mínima necesaria 🔎 (pnpm reciente ya los bloquea) | |
 | SEG-SUP-06 | **Acciones de GitHub fijadas por *commit SHA***, con `permissions:` mínimos; sin `pull_request_target`; los secretos no llegan a *forks* | |
 | SEG-SUP-07 | Cada paquete nuevo se justifica en el Pull Request (qué hace, mantenimiento, descargas, licencia, alternativas sin dependencia) | |

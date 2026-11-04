@@ -1,6 +1,6 @@
 # 04 · Modelo de Datos — Zavia
 
-> Estado: BORRADOR v0.6 · Base de datos: PostgreSQL en Supabase.
+> Estado: BORRADOR v0.7 · Base de datos: PostgreSQL en Supabase.
 > Principio rector: **la base de datos garantiza integridad y aislamiento; las fórmulas de negocio viven en código TypeScript puro** (RNF-051). Por eso no hay cálculos de proyección, semáforos ni insights dentro de la base.
 
 ## 1. Convenciones
@@ -253,10 +253,10 @@ Todas las vistas se crean con **`security_invoker = true`** para que las políti
 | Función `create_transfer(...)` | Valida cuentas, monedas e idempotencia y crea la transferencia en una sola operación (RN-007) |
 | Función `add_goal_entry(...)` | Inserta un aporte o retiro, impide `saved < 0` y marca la meta como completada si corresponde (RN-022, RN-024), todo atómico |
 | Función `archive_account(id)` | Comprueba saldo 0 y archiva (RN-010) |
-| Función `confirm_import(...)` | Inserta un lote de filas validadas y registra `import_batches` en una transacción (RN-012, RN-014) |
+| Función `confirm_import(user_id, ...)` | Inserta un lote de filas **ya validadas por el servidor** con `source = 'import'` y registra `import_batches` en una transacción (RN-012, RN-014). Ejecutable **solo por el rol de servicio**: recibe el `user_id` verificado de la sesión y comprueba que cada cuenta del lote pertenece a ese usuario |
 | Función `database_size_bytes()` | Devuelve el tamaño de la base para el **freno por tamaño** (RNF-071). Ejecutable **solo por el rol de servicio** |
 
-Las funciones se declaran **`security invoker`**: se ejecutan con los permisos del usuario, de modo que RLS sigue aplicando.
+Las funciones se declaran **`security invoker`**: se ejecutan con los permisos de quien llama, de modo que RLS sigue aplicando. **Excepción acotada:** las funciones de **disparador** (alta automática del perfil, registro de actividad de la racha) pueden ser `security definer` con `search_path` fijo, porque deben escribir en tablas que el cliente no puede escribir; solo escriben la fila del `user_id` de la fila disparadora y el cliente no puede invocarlas.
 
 El cálculo en moneda base con tipo de cambio (RN-027) se hace en TypeScript sobre estos totales, no en SQL.
 
@@ -275,7 +275,7 @@ create policy "own rows" on public.accounts
 
 - Las **claves foráneas compuestas** `(entidad_id, user_id)` hacen imposible, incluso con un error de código, vincular una transacción de un usuario con una cuenta o categoría de otro (RN-008).
 - **Visitantes demo** son usuarios anónimos de Supabase: usan exactamente las mismas políticas, por lo que quedan aislados entre sí (RNF-019).
-- El **rol de servicio** (clave secreta) solo se usa en el servidor para: sembrar datos del demo, limpiar sesiones caducadas, purgar eliminados y escribir `demo_signups`. Nunca llega al navegador (RNF-025).
+- El **rol de servicio** (clave secreta) solo se usa en el servidor, siempre con el `user_id` tomado de la sesión verificada o de la regla procesada, para: sembrar datos del demo, **confirmar importaciones** (`confirm_import`), **generar ocurrencias recurrentes**, escribir logros y rachas, limpiar sesiones caducadas, purgar eliminados y escribir `demo_signups`. Nunca llega al navegador (RNF-025).
 - Una prueba automática recorre el catálogo de la base y **falla si alguna tabla del esquema público no tiene RLS** (RNF-020).
 
 ### 7.1 Permisos del cliente por tabla y columna
@@ -293,7 +293,7 @@ Fecha del movimiento entre hoy − 10 años y hoy + 31 días (RN-004) · tipo de
 Disparadores de conteo (RN-009, RNF-067): usuario real hasta **5,000** movimientos; **sesión demo hasta 1,000**; 100 cuentas, 200 metas y 50 recurrentes (valores iniciales ajustables). Al superarlos, la base rechaza la inserción y la aplicación devuelve `QUOTA_EXCEEDED`.
 
 ### 7.4 Funciones SQL
-Todas con `search_path` fijo y permiso de ejecución solo para `authenticated` (se revoca a `public`).
+Todas con `search_path` fijo y permiso de ejecución revocado a `public`. Las de uso del cliente se conceden a `authenticated`; `confirm_import` y `database_size_bytes`, solo a `service_role`.
 
 ## 8. Procesos programados
 
